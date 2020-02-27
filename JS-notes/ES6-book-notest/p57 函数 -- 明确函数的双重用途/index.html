@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+
+    //  有无 new 操作符返回值不同
+    function Foo(name){
+
+        this.name = name;
+
+        console.log(new.target);
+
+        return "函数本体";
+    }
+
+    let foo0 = new Foo("foo0");
+    let foo1 = Foo("foo1");
+
+    console.log("foo0 与 f001 分别输出：");
+    console.log(foo0);
+    console.log(foo1,"\n\n\n");
+
+
+    console.log("Foo的 [[Call]] 与 [[Construct]]");
+    console.log(`JS 为函数提供了两个不同的内部方法： [[Call]] 与 [[Construct]] 。 
+当函数未使用 new 进行调用时， [[call]] 方法会被执行， 运行的是代码中显示的函数体。 
+当函数使用 new 进行调用时， [[Construct]] 方法则会被执行， 负责创建一个被称为新目标的新的对象， 并且使用该新目标作为 this 去执行函数体。
+拥有 [[Construct]] 方法的函数被称为构造器。`);
+
+
+</script>
+</html>

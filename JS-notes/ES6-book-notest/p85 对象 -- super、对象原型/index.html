@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+        //  ES6 原型继承、原型修改
+        let obj0 = { num: 0, fun0(){ return this.num } };
+
+        let obj1 = { num: 1, fun1(){ return Object.getPrototypeOf(obj1) } };
+
+        Object.setPrototypeOf(obj1, obj0);
+
+        console.log("obj1原型对象被覆盖为obj0，obj1原型对象为：");
+        console.log(obj1.fun1(),"\n\n");
+
+        //  关于 this 指向问题
+        //  Object.getPrototypeOf(obj3).fun2()没有使用call(obj3)，在执行Object.getPrototypeOf(obj3).fun2()即obj3.__proto__.fun2()时，this为obj2
+        let obj2 = { num: 2, fun2(){ return this.num } };
+
+        let obj3 = { num: 3, fun3(){ return Object.getPrototypeOf(obj3).fun2() } };
+
+        Object.setPrototypeOf(obj3, obj2);
+
+        console.log("obj3原型对象被覆盖为obj2，执行obj3.fun3()");
+        console.log(obj3.fun3(),"\n\n");
+
+        //  ES6 super，super原型对象的引用
+        let obj4 = { num: 4, fun4(){ return this.num } };
+
+        //  super 替换了 Object.getPrototypeOf(obj5).fun4.call(obj5)
+        let obj5 = { num: 5, fun5(){ return super.fun4() } };
+
+        Object.setPrototypeOf(obj5, obj4);
+
+        console.log("obj5原型对象被覆盖为obj4，执行obj5.fun5()");
+        console.log(obj5.fun5(),"\n\n");
+
+
+
+        let	obj6 = { fuun()	{ return "6"; }};
+        
+        let	obj7 = { fuun()	{ return Object.getPrototypeOf(this).fuun()+"7";}};
+
+        Object.setPrototypeOf(obj7,	obj6);
+
+        let	obj8 =	Object.create(obj7);
+        console.log("原型指向嵌套");
+        console.log(obj8.fuun());	
+    </script>
+</body>
+</html>

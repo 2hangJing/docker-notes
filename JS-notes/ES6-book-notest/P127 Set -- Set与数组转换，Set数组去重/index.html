@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    //  复杂数组去重，Set去重
+    let dataArr = [1,"1", {id:10}, [5,[0,2,3],{name: "张京"}], [5,[0,2,3],{name: "张京"}], {age: "张京"}, {age: "张京", old:23}];
+
+    let dataArr_str = dataArr.map((val,key,arr)=>JSON.stringify(val));
+
+    let newArr = [...new Set(dataArr_str)].map(val=>JSON.parse(val));
+
+    console.log(newArr);
+    
+</script>
+</html>

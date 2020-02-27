@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>懒加载</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    img{
+        display: block;
+        height: 300px;
+        margin-bottom: 50px;
+    }
+    div{
+        height: 1200px;
+        width: 100%;
+        background: tan;
+    }
+</style>
+<body>
+    <div></div>
+    <img data-src="./0.jpg" src="./1.jpg" alt="">
+    <img data-src="./0.jpg" src="./1.jpg" alt="">
+    <img data-src="./0.jpg" src="./1.jpg" alt="">
+    <img data-src="./0.jpg" src="./1.jpg" alt="">
+    <img data-src="./0.jpg" src="./1.jpg" alt="">
+</body>
+<script>
+
+    let windowHei = document.documentElement.clientHeight;
+
+    let imgList = document.querySelectorAll("img");
+
+    /*  懒加载函数
+    -------------*/ 
+    function scrollFun(...arg){
+        console.log(1);
+        let scrollHei = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        for(let val of Array.from(imgList)){
+
+            if(val.offsetTop - (scrollHei + windowHei) < 100){
+
+                val.src = val.getAttribute("data-src");
+            }
+        }
+    }
+
+    /*  函数防抖
+    -----------*/ 
+    function debounce(func, wait, isNow){
+
+        let timeCustom;
+
+        return function(...arg){
+            
+            clearTimeout(timeCustom);
+
+            if(isNow){
+                
+                let call = !timeCustom;
+
+                timeCustom = setTimeout(() => {
+                    
+                    timeCustom = null;
+                }, wait);
+
+                if(call)func.apply(this, arg)
+            }else{
+
+                timeCustom = setTimeout(() => {
+
+                    func.apply(this, arg);
+                }, wait);
+            }
+        }
+    }
+
+    let scrollAdd = debounce(scrollFun, 1000, true);
+
+
+    /*  函数节流
+    -----------*/ 
+    function throttle(fun, wait){
+
+        let preDate = 0;
+
+        return function(...arg){
+
+            let now = new Date().getTime();
+
+            if(now - preDate > wait){
+
+                fun.apply(this, ...arg);
+
+                preDate = now;
+            }
+        }
+    }
+
+    let scrollThrottle = throttle(scrollFun, 1000);
+
+    window.addEventListener("scroll",function(e){
+        
+        // scrollAdd(e);
+
+        scrollThrottle(e);
+        
+    },false);
+
+
+
+</script>
+</html>

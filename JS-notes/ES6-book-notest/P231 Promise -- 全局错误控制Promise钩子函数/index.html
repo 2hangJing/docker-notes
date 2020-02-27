@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //  Promise 俩个钩子函数
+    // 	unhandledrejection  ：当一个 Promise 被拒绝、而在事件循环的一个轮次中没有任何拒绝处理函数被调用，该事件就会被触发；
+    //	rejectionHandled    ：若一个 Promise 被拒绝、并在事件循环的一个轮次之后再有拒绝处理函数被调用，该事件就会被触发;
+
+    //  验证该浏览器支持这俩个钩子
+    if("onunhandledrejection" in window && "onrejectionhandled" in window){
+
+        let pro;
+
+        window.onunhandledrejection = function(e){
+
+            console.log("promise 错误发生并且没有错误处理器","\n\n");
+
+            console.log("promise 错误发生被 onunhandledrejection 函数收集，e 返回值为：");
+            console.log(e,"\n\n");
+
+            console.log(pro === e.promise,"\n\n");
+        }
+
+        window.onrejectionhandled = function(e){
+            
+            console.log("promise 错误发生并被处理后被 onrejectionhandled 函数收集，e 返回值为：");
+            console.log(e,"\n\n");
+        }
+
+        pro = new Promise((resolve,reject)=>{
+
+            reject("错误！");
+        });
+
+        setTimeout(e=>{
+
+            pro.catch(e=>{})
+        },1000)
+        
+    }else{
+
+        alert("浏览器不支持啊！")
+
+    }
+
+</script>
+</html>

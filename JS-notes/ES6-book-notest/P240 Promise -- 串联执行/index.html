@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    let p0 = new Promise((resolve, reject)=>{
+
+        resolve(0);
+    });
+
+    /* 利用Promise 串联的方式完成 p0 resolve之后 再 resolve p1 */ 
+    p0.then(arg=>{
+
+        console.log(arg);
+
+        let p1 = new Promise((resolve, reject)=>{
+
+            resolve(1);
+        });
+
+        return p1;
+    }).then(arg=>{
+
+        console.log(arg);
+    })
+
+    /* callback类 完成 p0 resolve之后 再 resolve p1 */ 
+    p0.then(arg=>{
+
+        console.log(arg);
+
+        let p1 = new Promise((resolve, reject)=>{
+
+            resolve(1);
+        });
+
+        p1.then(arg=>{
+
+            console.log(arg);
+        })
+    })
+
+</script>
+</html>
+<!-- 最新 p242 -->

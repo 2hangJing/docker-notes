@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+
+    let p0 = new Promise((resolve, reject)=>{
+        reject(1);
+    }) 
+
+
+    setTimeout(e=>{
+        let p1 = Promise.resolve(5);
+
+        p1.then(arg=>{
+            console.log(arg === p0);
+        }).catch(arg=>{
+
+            console.log(arg);
+        })
+
+    },1000)
+
+    let a = [{id: 10},{id: 10},5,5,5,"a","a"];
+
+    let newArr = [...new Set(a)];
+
+    console.log(newArr);
+
+
+    function toNum(str){
+
+        let strArr = str.split(""), nowNum = 1, nowName = "";
+
+        let strNum = strArr.reduce((total,val,index,arr)=>{
+
+            if(index == 0){
+
+                nowName = val;
+
+                return "";
+            }
+
+            if(val == arr[index-1]){
+
+                nowNum++;
+
+                nowName = val;
+
+                if(index +1 == strArr.length){
+
+                    total = total + `${nowNum}${nowName}`;
+                }
+
+                return total;
+            }else{
+
+                total = total + `${nowNum}${nowName}`;
+
+                nowName = val;
+
+                nowNum = 1;
+
+                if(index +1 == strArr.length){
+
+                    total = total + `1${val}`;
+                }
+
+                return total;
+            }
+        },"");
+
+        return strNum;
+    }
+    console.log("aeef 输出为：");
+    console.log(toNum("aeef"));
+
+</script>
+</html>

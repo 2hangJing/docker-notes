@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        console.log("getter setter 俩种写法","\n\n");
+        
+        //  对象字面量
+        let obj0 = {
+            _name: 10,
+            get name(){
+
+                return this._name+10;
+            },
+            set name(arg){
+
+                return arg-10;
+            }
+        };
+
+        obj0.name = 10;
+
+        console.log("对象字面量写法");
+        console.log(obj0.name,"\n\n");
+
+
+        //  defineProperty写法
+        //  Object.defineProperty(obj,prop,descriptor) 修改对象中某个属性
+        //  Object.getOwnPropertyDescriptor方法，返回某个对象属性的描述对象（ descriptor ）
+        //  用法 var obj = { p: 'a' }; Object.getOwnPropertyDescriptor(obj, 'p')
+
+        let obj1 = {_name: 10};
+
+        Object.defineProperty(obj1,"name",{
+
+            get(){
+
+                return this._name+10;
+            },
+            set(arg){
+
+                return arg-10;
+            }
+        })
+
+        console.log("defineProperty写法");
+        console.log(obj1.name,"\n\n");
+
+        //  Object.assign 合并带有访问器属性的对象
+        let obj2 = {
+            get name(){ return 10; },
+            set name(arg){ return 10; }
+        }
+
+        let obj3 = { _name: 15 };
+
+        Object.assign(obj3, obj2);
+
+        console.log("Object.assign 合并带有访问器属性的对象");
+        console.log(obj3);
+    </script>
+</body>
+</html>

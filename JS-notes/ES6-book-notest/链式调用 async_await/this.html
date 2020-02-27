@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this 的返回问题</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var a = "window";
+    
+    let obj0 = {
+        a: "a",
+        returnThis() {
+            // let [a, b] = ["a", "b"];
+            var fff = [];
+
+            function c() {
+
+                console.log("c输出为");
+                console.log(a);
+                console.log("c输出 this 为");
+                console.log(this);
+            }
+
+            c()
+
+            return {
+                // a,
+                // b,
+                c,
+                fff
+            };
+        }
+    };
+    
+    // obj0.returnThis();
+    obj0.returnThis().c();
+
+
+    let name = "The Window";
+ 
+    // let obj1 = {
+    //     name: 'my obj',
+    //     get: function () {
+    //         //这里的this指的是对象，这里为obj         
+    //         // var self=this
+    //         return function () {
+    //             //闭包里的this指的是window
+    //             return this.name;
+    //         }
+    //     }
+    // }
+
+    // console.log(obj1.get()());
+</script>
+
+</html>

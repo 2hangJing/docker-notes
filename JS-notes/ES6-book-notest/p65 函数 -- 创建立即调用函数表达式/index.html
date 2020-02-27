@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+        let iife0 = (function(str){ return str; })("iife0");
+
+        let iife1 = (function(str){ return str; }("iife1"));
+
+        let iife2 = function(str){ return str; }("iife2");
+
+        console.log("立即调用函数表达式【iife】非箭头函数几种写法","\n\n");
+        console.log("iife0为："+iife0);
+        console.log("iife1为："+iife1);
+        console.log("iife2为："+iife2,"\n\n");
+
+
+        let iife3 = (str=>str)("iife3");
+
+        console.log("立即调用函数表达式【iife】箭头函数写法","\n\n");
+        console.log("iife3为："+iife3);
+    </script>
+</body>
+</html>

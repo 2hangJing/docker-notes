@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>async</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // let p = new Promise((resolve, reject)=>{
+
+    //     resolve(1);
+
+    // }) 
+
+
+    let num0 = function(){
+
+        return new Promise((resolve, reject) => {
+
+            setTimeout(e => {
+
+                console.log("num0");
+                resolve(10)
+                
+            }, 5000);
+        });
+    } 
+
+
+    let num1 = function(arg){
+
+        return new Promise((resolve, reject) => {
+
+            setTimeout(e => {
+
+                console.log("num1 + arg: " + arg);
+                resolve(10)
+            }, 5000);
+        });
+    } 
+
+    let num2 = new Promise((resolve, reject) => {
+
+
+        setTimeout(e => {
+            resolve(50)
+        }, 5000);
+    });
+
+
+    // p.then(data=>{
+
+    //     throw new Error("promise 初始化就出错，后续catch 是否可以捕获");
+
+    // }).catch(err=>{
+
+    //     console.log(err);
+    // })
+
+
+    async function total() {
+        console.log(0);
+        let total0 = await num0();
+        console.log(total0);
+        let total1 = await num1(total0);
+        console.log(total1);
+
+        return total0 + total1;
+    }
+
+
+    total().then((val) => {
+
+        console.log("total输出为："+ val);
+    })
+</script>
+
+</html>

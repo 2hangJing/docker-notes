@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    let p0 = new Promise((resolve, reject)=>{
+
+        setTimeout(e=>{
+            resolve("p0");
+        },1000);
+    })
+
+    let p1 = new Promise((resolve, reject)=>{
+
+        setTimeout(e=>{
+            resolve("p1");
+        },2000);
+    })
+
+    let p2 = new Promise((resolve, reject)=>{
+
+        setTimeout(e=>{
+            resolve("p2");
+        },3000);
+    })
+
+    /*  Promise.all 全部完成后输出到一个数组中，输出的数组中元素顺序根据填充顺序
+        -------------------------------------------------------------------- */
+    let p3_all = Promise.all([p0, p1, p2]);
+
+    p3_all.then(arg=>{
+        console.log("Promise.all 三秒后输出：");
+        console.log(arg);
+    })
+
+    /*  Promise.race 输出填充数组中最先完成的一个promise
+        ---------------------------------------------- */
+    let p3_race = Promise.race([p0, p1, p2]);
+
+    p3_race.then(arg=>{
+        console.log("Promise.race 一秒后输出：");
+        console.log(arg);
+    })
+
+    
+    let p4 = new Promise((resolve, reject)=>{
+
+        setTimeout(e=>{
+            resolve("p4");
+        },1000);
+    })
+
+    let p5 = new Promise((resolve, reject)=>{
+
+        setTimeout(e=>{
+            reject("p5");
+        },2000);
+    })
+
+    let p6 = new Promise((resolve, reject)=>{
+
+        setTimeout(e=>{
+            resolve("p6");
+        },3000);
+    })
+
+    /*  有 reject 的promise.all直接输出，不再等待其它完成
+        ----------------------------------------------- */
+    let p7_all = Promise.all([p4, p5, p6]);
+
+    p7_all.catch(arg=>{
+        console.log("Promise.all 处理 reject ：");
+        console.log(arg);
+    })
+
+    /*  有 reject 的promise.race 只与时间有关
+        ------------------------------------ */
+    let p7_race = Promise.race([p4, p5, p6]);
+
+    p7_race.catch(arg=>{
+        console.log("Promise.race 处理 reject ：");
+        console.log(arg);
+    }).then(arg=>{
+
+        console.log("Promise.race 处理只与时间有关，reject p5 在p4 之后，直接输出P4，可以通过catch捕捉到p5的拒绝处理");
+        console.log(arg);
+    })
+
+
+
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    //  关于instanceof, a instanceof b--> b的prototype是否在 a的原型链上
+    let arr = new Array(1,2,3);
+
+    console.log(arr instanceof Array);
+
+    //  关于 arguments对象
+    let arg = function(x,y,z){
+
+        console.log(arguments instanceof Object);
+        console.log(arguments instanceof Array);
+
+        //  arguments --> {0: x, 1: y, 2: z, length: 3} 类数组对象，通过arg["0"] 调用，很像数组。
+        //  通过Array.from 转化为数组
+        console.log(Array.from(arguments));
+    }
+
+    arg(1,2,3)
+
+
+    //  Array.from(arr, fun, this)
+    let obj = {
+
+        arg: 1,
+        argAdd(val){
+
+            return this.arg+val;
+        }
+    } 
+
+    let arr_obj = {"0": 0, "1": 1, length: 2};
+
+    console.log(Array.from(arr_obj,obj.argAdd,obj)); // [1,2]
+
+</script>
+</html>
