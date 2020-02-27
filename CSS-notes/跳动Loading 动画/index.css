@@ -1,0 +1,95 @@
+.jump_animation{
+    height: 400px;
+}
+
+span{
+    position: relative;
+}
+span::before{
+    position: absolute;
+    top: 0;
+    left: 50px;
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: #999;
+    animation: box 0.5s linear 0s infinite;
+    -webkit-animation: box 0.5s linear 0s infinite;
+    z-index: 1;
+}
+
+span::after{
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    content: '';
+    display: block;
+    width: 30px;
+    height: 3px;
+    border-radius: 15px/1.5px;
+    background-color: #333;
+    animation: shadow 0.25s ease-in 0s infinite alternate;
+    -webkit-animation: shadow 0.25s ease-in 0s infinite alternate;
+    z-index: 2;
+}
+
+@keyframes box {
+    0%{
+        top: 0;
+    }
+    10%{
+        top: 4px;
+        transform: rotateZ(5deg);
+    }
+    20%{
+        top: 10px;
+        transform: rotateZ(15deg);
+    }
+    30%{
+        top: 20px;
+        border-radius: 0 0 0 0;
+        transform: rotateZ(20deg);
+    }
+    40%{
+        top: 30px;
+        border-radius: 0 0 10px 0;
+        transform: rotateZ(30deg);
+    }
+    50%{
+        top: 50px;
+        border-radius: 0 0 20px 0;
+        transform: rotateZ(45deg);
+    }
+    60%{
+        top: 30px;
+        border-radius: 0 0 10px 0;
+        transform: rotateZ(60deg);
+    }
+    70%{
+        top: 20px;
+        border-radius: 0 0 0 0;
+        transform: rotateZ(72deg);
+    }
+    80%{
+        top: 10px;
+        transform: rotateZ(80deg);
+    }
+    90%{
+        top: 4px;
+        transform: rotateZ(85deg);
+    }
+    100%{
+        top: 0;
+        transform: rotateZ(90deg);
+    }
+}
+
+@keyframes shadow {
+    0%{
+        transform: scale(1)
+    }
+    100%{
+        transform: scale(1.3);
+    }
+}

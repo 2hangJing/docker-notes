@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vertical-align</title>
+    <style>
+        .parent0{
+            display: inline-block;
+            height: 400px;
+            width: 400px;
+            background-color: thistle;
+        }
+        .parent0 .bock0{
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            background: cadetblue;
+        }
+        .parent0 .bock1{
+            display: inline-block;
+            height: 150px;
+            width: 100px;
+            background: rgb(242, 254, 173);
+            vertical-align: middle;
+        }
+
+        .parent1{
+            height: 400px;
+            width: 400px;
+            background-color: thistle;
+            margin-top: 20px;
+            font-size: 20px;
+            line-height: 100px;
+            display: inline-block;
+        }
+        
+        .parent1 .bock0{
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            background: rgb(242, 254, 173);
+        }
+.parent1 .bock1{
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    background: rgb(242, 254, 173);
+    vertical-align: 50%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="parent0">
+        <div class="bock0"></div>
+        <div class="bock1"></div>
+        <span>xX</span>
+        <span>xxXX</span>
+    </div>
+
+<div class="parent1">
+    <div class="bock0"></div>
+    <div class="bock1"></div>
+    <span>xxXX</span>
+</div>
+<div class="parent1">
+        <div class="bock0"></div>
+        <div class="bock1"></div>
+        <span>xxXX</span>
+    </div>
+
+</body>
+</html>

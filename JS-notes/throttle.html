@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>throttle</title>
+	</head>
+	<body style="height:30000px">
+		<h1 style="text-align: center;position: fixed;top: 50px;left: 30%;">节流函数↓</h1>
+		<h2 style="text-align: center;position: fixed;top: 150px;left: 30%;">当前输出:</h2>
+		<h2 id="show" style="text-align: center;position: fixed;top: 250px;left: 30%;">0</h2>
+		
+		
+	</body>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+		
+		//节流函数
+        //  method          ==> 执行函数
+        //  initContext     ==> 生成实例时初始化作用域
+        //  initData        ==> 生成实例时初始化参数
+        //  wait            ==> 稀释的时间间隔
+		function throttle(method, initContext, initData, wait){
+
+			let newTime = new Date().getTime();
+
+			return function(context, callData){
+
+				let now = new Date().getTime();
+
+                context = context == undefined ? initContext : context;
+
+                callData = callData == undefined ? initData : callData;
+
+				if(now - newTime >= wait){
+                    
+					method.apply(context, callData);
+
+					newTime = now;
+				}
+			}
+		}
+		
+		
+		function scrollFn(x){
+
+            console.log('滚动函数的 this 指向');
+            console.log(this);
+
+		    document.getElementById("show").innerHTML=x;
+		}
+		
+		let throttleFun = throttle(scrollFn, {obj: '未传入调用时的this 指向，指向默认初始化的this'}, ['初始化参数，每次运行参数固定'], 1000);
+
+		window.onscroll=function(){
+
+            // throttleFun(this, ['运行时参数，当前秒数为：'+ new Date().getSeconds()]);
+
+            throttleFun(undefined,  ['运行时参数，当前秒数为：'+ new Date().getSeconds()]);
+
+			// throttleFun()
+		};
+	</script>
+</html>

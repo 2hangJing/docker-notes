@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>滚动加载+scroll节流</title>
+		<style>
+			
+			img{
+				display: block;
+				margin: 0 auto;
+				height: 272px;
+			}
+			
+			.load_img{
+				opacity: 0;
+				transform: translateY(50px);
+				transition: 0.8s all ease;
+			}
+			
+			.load_img_loading{
+				transform: translateY(0);
+				opacity: 1;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<h2 style="position: fixed;top: 50px;left: 10%;font-size: 20px;">滚动往下图片均无SRC，无HTTP请求。滚动到窗口时加载src</h2>
+		<div style="position: fixed;top: 0;left: 0;width: 100%;height: 5000px;background-color: rgba(0,0,0,0.9);color: white;text-align: center;">
+			img - > loading........
+		</div>
+		
+		<img src="index_2.png" alt="" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+		<img class="load_img" load-src="index_2.png" />
+	</body>
+	<script type="text/javascript">
+		var loadImg={
+			imgs:[],
+			img:document.getElementsByTagName('img'),
+			win_height:document.documentElement.clientHeight,
+			scrollTop:window.scrollTop || (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop || 0,
+			
+			//scroll 节流
+			throttle:function (method,context,delay){
+			
+			    var minusTim=0;
+			    
+			    !(!!method.delay) && (minusTim=delay) || (minusTim=new Date().getTime()-method.delay);
+			    
+				if(minusTim>=delay){
+					
+					method.call(context);
+					
+					method.delay=new Date().getTime();
+					
+				}
+				else{
+					
+					clearTimeout(method.tId);
+					
+					method.tId=setTimeout(function(){
+						
+				        method.call(context)
+				        
+				        method.delay=new Date().getTime();
+				        
+				    },200);
+				}
+			   
+			},
+			pageXY:function(elem){
+				var rect = elem.getBoundingClientRect(),
+				
+			    	scrollLeft = window.scrollLeft || (document.documentElement && document.documentElement.scrollLeft) || document.body.scrollLeft || 0,
+			 
+			    	html = document.documentElement || document.getElementsByTagName('html')[0],
+			 
+			    	//修复ie 7 下的浏览器边框也被算在 boundingClientRect 内的 bug
+			    	deviation = html.getBoundingClientRect();
+			    	
+			    //修复 ie8 返回 -2 的 bug
+			    deviation = { //FF 不允许修改返回的对象
+			        left:   deviation.left < 0 ? 0 : deviation.left,
+			        top:    deviation.top < 0 ? 0 : deviation.top
+			    };
+			 
+			    return {
+			        left:   rect.left + scrollLeft - deviation.left,
+			        top:    rect.top + this.scrollTop - deviation.top
+			    };
+			},
+			scroll_fn:function(){
+				
+				for(var i=-1;this.imgs[++i];){
+					
+					if(this.scrollTop+this.win_height>= this.pageXY(this.imgs[i]).top+200){
+						
+						this.imgs[i].src = this.imgs[i].getAttribute('load-src');
+						
+						this.imgs[i].className+=" load_img_loading";
+						
+						//JS优化
+						this.imgs.splice(this.imgs.indexOf(this.imgs[i]),1);
+						
+						i--;
+						
+					}
+					
+				}
+				
+			},
+			entry:function(){
+				var _this=this;
+				
+				if(!(!!this.imgs.length)){
+					for(var j=0;j<this.img.length;j++){
+					
+						!!this.img[j].getAttribute('load-src') && this.imgs.push(this.img[j]);
+						
+					}
+				}
+				
+				//当窗口一加载完毕，就调用
+				this.scroll_fn();
+				
+				window.onscroll=function(){
+					
+					_this.throttle(_this.scroll_fn,_this,500);
+					
+				};
+			},
+			
+		}
+		
+		
+		document.getElementsByTagName("img")[0].onload=function(){
+			document.getElementsByTagName("div")[0].style.display="none";
+			
+			loadImg.entry();
+		}
+		
+	</script>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BFC</title>
+    <style>
+        *{ 
+            margin: 0;
+            padding: 0;
+        }
+        h3{
+            margin: 25px 0;
+        }
+
+
+        .bfc_rules_1{
+            overflow: hidden;
+
+        }
+        .bfc_rules_1 div{
+            width: 100px;
+            height: 100px;
+            margin: 20px 0;
+            background-color: tan;
+        }
+
+        .bfc_rules_4{
+            margin-bottom: 20px;
+        }
+        .bfc_rules_4 div{
+
+            width: 200px;
+            height: 150px;
+            background-color: tan;
+        }
+
+        .bfc_rules_4 .bfc_rules_4_float{
+
+            width: 100px;
+            height: 100px;
+            background-color: teal;
+            float: left;
+        }
+
+        .bfc_rules_5 div{
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            background-color: tan;
+        }
+
+
+        .bfc_rules_6{
+            background-color: tan;
+            
+            overflow: auto;
+        }
+        .bfc_rules_6 div{
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: teal;
+            font-size: 14px;
+        }
+
+        .bfc_imgText{
+            border: 1px solid #666;
+            padding: 20px;
+        }
+        .bfc_imgText img{
+            float: left;
+            display: block;
+            width: 150px;
+            height: 150px;
+        }
+        .bfc_imgText p{
+            overflow: auto;
+            padding-left: 20px;
+            width: 300px;
+            text-align: justify;
+        }
+
+
+        .bfc_clearFloat{
+
+            border: 1px solid #666;
+            padding: 20px;
+            background-color: tan;
+            overflow: auto;
+        }
+        .bfc_clearFloat img{
+            float: left;
+            display: block;
+            width: 150px;
+            height: 150px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <p>
+        触发元素 :  <br>　　
+        【1】根元素，即HTML元素<br>　　
+        【2】float的值不为none<br>　　
+        【3】overflow的值不为visible<br>　　
+        【4】display的值为inline-block、table-cell、table-caption<br>　　
+        【5】position的值为absolute或fixed<br>　　
+    </p>
+    
+
+    <p>
+        触发效果 : <br>　　
+        1.内部的Box会在垂直方向，一个接一个地放置。 <br>　　
+        2.Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠 <br>　　
+        3.每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。 <br>　　
+        4.BFC的区域不会与float box重叠。 <br>　　
+        5.BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。 <br>　　
+        6.计算BFC的高度时，浮动元素也参与计算   <br>　　  
+    </p>
+
+    
+    <h3>规则一：内部的Box会在垂直方向，一个接一个地放置。</h3>
+    <div class="bfc_rules_1">
+        <div></div>
+        <div></div>
+    </div>
+    <hr>
+
+    <h3>规则二：Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠。</h3>
+    <div class="bfc_rules_1">
+        <div>margin: 20px 0;</div>
+        <div>margin: 20px 0;</div>
+    </div>
+    <hr>
+
+    <h3>规则三：每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。</h3>
+    <!-- <div class="bfc_rules_3">
+        <div>margin: 20px 0;</div>
+        <div>margin: 20px 0;</div>
+    </div> -->
+    <p>暂无</p>
+    <hr>
+
+    <h3>规则四：BFC的区域不会与float box重叠。</h3>
+    <div class="bfc_rules_4">
+        <div class="bfc_rules_4_float">float: left;</div>
+        <div></div>
+    </div>
+
+    <div class="bfc_rules_4">
+        <div class="bfc_rules_4_float">float: left;</div>
+        <div style="overflow:auto;">overflow:auto;触发 BFC</div>
+    </div>
+    <hr>
+
+    <h3>规则五：BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。</h3>
+    <b>行内块的基线导致错位问题,详情 vertical-align</b>
+    <div class="bfc_rules_5" style="margin-bottom: 20px;">
+        <div></div>
+        <div>x</div>
+    </div>
+    <div class="bfc_rules_5">
+        <div></div>
+        <div style="overflow:auto;font-size:12px;">x overflow:auto;触发 BFC</div>
+    </div>
+    <hr>
+
+    <h3>规则六：计算BFC的高度时，浮动元素也参与计算。</h3>
+    <div class="bfc_rules_6" >
+        父元素被浮动元素撑开
+        <div>唯一内部元素设置 float</div>
+    </div>
+    <hr>
+    <br>
+    <br>
+
+    <h2>实际作用</h2>
+    <br>
+    <br>
+    <h3>左图右文（非文字环绕）</h3>
+    <p>利用规则四</p>
+    <div class="bfc_imgText">
+        <img src="./0.jpg" alt="">
+        <p>
+            在前端页面布局中，经常用到display：inline-clock；方便布局，能够将块状元素按照内联元素的方式布局，同时能设置宽高。
+            在前端页面布局中，经常用到display：inline-clock；方便布局，能够将块状元素按照内联元素的方式布局，同时能设置宽高。
+            在前端页面布局中，经常用到display：inline-clock；方便布局，能够将块状元素按照内联元素的方式布局，同时能设置宽高。
+            在前端页面布局中，经常用到display：inline-clock；方便布局，能够将块状元素按照内联元素的方式布局，同时能设置宽高。
+        </p>
+    </div>
+    <h3>清除内部元素浮动</h3>
+    <p>利用规则六</p>
+    <div class="bfc_clearFloat">
+        <img src="./0.jpg" alt="">
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>margin层叠</title>
+
+    <style>
+    
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        hr{
+            clear: both;
+        }
+        h3{
+            margin: 20px;
+        }
+        p{
+            text-align: center;
+            border-bottom: 1px solid #666;
+        }
+        div{
+            font-size: 14px;
+        }
+
+
+
+
+        .example_1_overlapping{
+            float: left;
+        }
+        .example_1_overlapping div{
+            height: 100px;
+            width: 100px;
+            background-color: tan;
+            margin: 20px;
+            font-size: 12px;
+        }
+        .example_1_normal{
+            float: left;
+        }
+        .example_1_normal>div>div{
+            height: 100px;
+            width: 100px;
+            background-color: tan;
+            margin: 20px;
+            font-size: 12px;
+            border-bottom: 1px solid transparent;
+        }
+
+
+        .example_2_overlapping{
+            float: left;
+        }
+        .example_2_overlapping>div{
+            width: 350px;
+            margin: 30px;
+            background-color: tan;
+            position: relative;
+        }
+        .example_2_overlapping>div>div{
+            width: 150px;
+            height: 100px;
+            margin-top: 50px;
+            background-color: teal;
+        }
+        .example_2_overlapping>div>span{
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .example_2_normal{
+            float: left;
+        }
+        .example_2_normal>div{
+            width: 350px;
+            margin: 30px;
+            background-color: tan;
+            overflow: auto;
+            position: relative;
+        }
+        .example_2_normal>div>div{
+            width: 150px;
+            height: 100px;
+            margin-top: 50px;
+            background-color: teal;
+        }
+        .example_2_normal>div>span{
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <h3>情况一：上下边距重叠</h3>
+    <div class="example_1_overlapping">
+        <p>边距重叠</p>
+        <div class="">margin: 20px; <br> height: 100px;</div>
+        <div class="">margin: 20px; <br> height: 100px;</div>
+    </div>
+    <div class="example_1_normal">
+        <p>边距未重叠</p>
+        <div style="overflow:auto;">
+            <div >margin: 20px; <br> height: 100px;</div>
+        </div>
+        <div style="overflow:auto;">
+            <div >margin: 20px; <br> height: 100px;</div>
+        </div>
+    </div>
+    <hr>
+
+
+    <h3>情况二：嵌套内容边距重叠</h3>
+    <div class="example_2_overlapping">
+        <p>边距重叠</p>
+        <div>
+            <div>margin-top: 50px;</div>
+            <span>margin-top: 20px;</span>
+        </div>
+    </div>
+    <div class="example_2_normal">
+        <p>边距未重叠</p>
+        <div>
+            <div>margin-top: 50px;</div>
+            <span>margin-top: 20px;</span>
+        </div>
+    </div>
+    <hr>
+
+
+</body>
+</html>

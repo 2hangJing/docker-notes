@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;}
+        div{
+            border: 1px solid #aaa;
+            box-sizing: border-box;
+        }
+        .outer{
+            width: 300px;
+            height: 300px;
+            padding: 50px;
+        }
+        .inner{
+            width: 200px;
+            height: 200px;
+            padding: 50px; 
+        }
+        .content{
+            width: 100px;
+            height: 100px;
+            border: 1px solid #aaa;
+            text-align: center;
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">
+            <p class="content">内部按钮</p>
+        </div>
+    </div>
+</body>
+<script>
+    let dom_outer = document.querySelector(".outer");
+    let dom_inner = document.querySelector(".inner");
+    let dom_content = document.querySelector(".content");
+
+    dom_outer.addEventListener("click", ()=>{ console.log("outer"); }, {capture: true});
+    dom_inner.addEventListener("click", ()=>{ console.log("inner"); }, {capture: false});
+    dom_content.addEventListener("click", ()=>{ console.log("content"); }, {capture: false});
+    // dom_outer.addEventListener("click", ()=>{ console.log("outer"); }, false);
+    // dom_outer.addEventListener("click", ()=>{ console.log("inner"); }, false);
+    // dom_outer.addEventListener("click", ()=>{ console.log("content"); }, false);
+
+    //  第三个选项可以是一个 Boolean ，表示事件流触发类型，默认为 false。 false ==> 冒泡，true ==> 捕获
+    //  第三个选项可以是一个 Object ， 
+    // {
+    //     capture: Boolean,  默认 false ，意思同上
+    //     once: Boolean,  默认 false ，如果是 true 调用之后移除监听
+    //     passive: Boolean, 默认 false ，如果是 true 则表示一直不会调用 preventDefault() ,即使手动添加也会被忽略， 可以增加移动端性能
+    // }
+
+    // https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener
+</script>
+</html>

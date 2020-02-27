@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function MyPromise(promiseFun) {
+
+        this.checkFun = function (arg) {
+
+            return arg instanceof Function;
+        }
+
+        if (!this.checkFun(promiseFun)) throw 'new MyPromise 参数需要是一个函数!';
+
+        this.status = 'pending';
+
+        let resolveCallback = null,
+            resolveData = undefined,
+            resolveResult = undefined,
+            rejectCallback = null,
+            chainedCall = undefined;
+
+        this.then = function (arg, isChainedcall = true) {
+
+            if (!this.checkFun(promiseFun)) throw 'then 参数需要是一个函数!';
+
+            if (this.status == 'pending') {
+                
+                //  异步 resolve 时，链式调用的 callback 会在在 resolve 中初始化完毕
+                resolveCallback = arg;
+            } else {
+                
+                chainedCall = (resolve, reject) => {
+                    
+                    setTimeout(()=>{
+
+                        let result = arg(resolveData);
+
+                        if (result instanceof MyPromise) {
+                            
+                            result.then((data) => {
+
+                                resolve(data);
+                            }, false)
+
+                        } else{
+
+                            resolve(result);
+                        }
+                    }, 0)
+                };
+
+            }
+            //  防止循环回调
+            if(isChainedcall){
+
+                return new MyPromise((resolve, reject) => {
+
+                    //  同步状态直接执行父 then 构造的 Promise 
+                    if(chainedCall){
+                                           
+                        chainedCall(resolve, reject);
+                    }
+                    //  异步状态将链式调用的 resolve 注入到父 resolve 回调中（通过变量得方式存储 resolve） 
+                    else{
+                    
+                        chainedCall = resolve;
+                    }
+                });
+            }
+        }
+
+        this.resolve = function (data) {
+
+            if (this.status == 'pending') {
+
+                this.status = 'resolve';
+
+                //  同步状态存储resolve 传递的值
+                resolveData = data;
+
+                if (resolveCallback) {
+
+                    resolveResult = resolveCallback(data);
+
+                    if (resolveResult instanceof MyPromise) {
+
+                        resolveResult.then((thenData) => {
+
+                            chainedCall(thenData);
+                        }, false);
+
+                    } else{
+                        
+                        //  异步状态没有 .then 函数初始化 chainedCall 函数，兼容处理
+                        chainedCall && chainedCall(resolveResult)
+                    }
+                }
+            }
+        }.bind(this);
+
+        promiseFun(this.resolve, this.reject)
+    }
+
+    MyPromise.all = function (arg) {
+
+        let resolveNum = 0,
+            dataList = [],
+            status = 'pending';
+
+        let promise = new MyPromise((resolve, reject) => {
+
+            for (let i = 0; i < arg.length; i++) {
+
+                arg[i].then((data) => {
+
+                    dataList[i] = data;
+
+                    resolveNum++;
+                    console.log('````````````');
+                    console.log(data);
+                    if (resolveNum == arg.length) {
+
+                        resolve(dataList);
+                    }
+                });
+            }
+        });
+
+        return promise;
+    }
+
+    // let a = new MyPromise(function (resolve, reject) {
+
+    //     resolve('测试同步resolve -- 同步resolve 输出');
+    // });
+
+    // a.then((data)=>{ console.log(data); })
+
+    // console.log('测试同步resolve -- 同步代码 输出');
+
+    // let b = new MyPromise(function (resolve, reject) {
+
+    //     setTimeout(()=>{resolve('测试异步resolve -- 异步resolve 输出');}, 1000)
+    // });
+
+    // b.then((data)=>{ console.log(data); })
+
+    // let c = new MyPromise(function (resolve, reject) {
+
+    //     setTimeout(()=>{resolve('测试 .then 链式调用，无 return MyPromise');}, 1000)
+    // });
+
+    // c.then((data)=>{ console.log(data); }).then((data)=>{ console.log(data);});
+
+    let d = new MyPromise(function (resolve, reject) {
+
+        setTimeout(()=>{resolve('测试 .then 链式调用，有 return MyPromise');}, 1000)
+        // resolve('测试 .then 链式调用，有 return MyPromise');
+    });
+
+    d.then((data)=>{ 
+
+        console.log(data);
+
+        return new MyPromise(function(resolve, reject){
+            // setTimeout(()=>{resolve('测试 .then 链式调用，有 return MyPromise .then 链式调用');}, 1000)
+            resolve('测试 .then 链式调用，有 return MyPromise .then 链式调用');
+        });
+    }).then((data)=>{ 
+
+        console.log(data);
+    });
+    
+    // let proAll = MyPromise.all([
+    //     new MyPromise(function (resolve, reject) {
+
+    //         resolve('11');
+    //     }),
+    //     new MyPromise(function (resolve, reject) {
+
+    //         setTimeout(() => {
+
+    //             resolve('22');
+    //         }, 2000);
+
+    //     }),
+    //     new MyPromise(function (resolve, reject) {
+
+    //         setTimeout(() => {
+
+    //             resolve('33');
+    //         }, 3000);
+
+    //     }),
+    // ]);
+
+    // proAll.then((data) => {
+
+    //     console.log(data);
+    // })
+</script>
+
+</html>

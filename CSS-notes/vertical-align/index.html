@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js'></script>
+    <title>vertical-align</title>
+
+    <style>
+        *{ margin: 0; padding: 0;}
+        hr{  margin: 10px 0; }
+        img{ width: 200px; }
+        div{ width: 300px; background: thistle; margin-bottom: 25px;}
+
+        .parent1 img{
+            vertical-align: bottom;
+        }
+
+
+
+        .parent2{
+            height: 200px;
+            font-size: 20px;
+        }
+        .parent2 img{
+            height: 190px;
+            vertical-align: middle;
+        }
+        .parent3{
+            height: 200px;
+            font-size: 20px;
+        }
+        .parent3 img{
+            height: 190px;
+            vertical-align: middle;
+        }
+.parent3:after{
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+    background: salmon;
+    vertical-align: middle;
+}
+
+.parent4,.parent5{
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin: 0;
+}
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <div class="parent0"><img src="./0.jpg" alt=""></div>
+    <div class="parent1">
+        <img src="./0.jpg" alt="">
+    </div>
+    <p><br> 第一个出现底部边距的原因是：<br> ①img默认的基线为自己的底部 <br> ②vertical-align默认属性：元素的基线对齐父元素的基线 </p>
+    <p>这里的边距就是 div 的基线到底部的距离</p>
+    <hr>
+
+
+
+
+    <div class="parent2">
+        x
+        <img src="./0.jpg" alt="">
+    </div>
+    <div class="parent3">
+        x
+        <img src="./0.jpg" alt="">
+    </div>
+    <p><br> 第一个图片出现边距不对称的原因是：<br> 有vertical-align: middle;属性的元素 中部 对齐的是：（ 父元素“基线” + x-height ） / 2 </p>
+    <p> <b>x-height : "x" 字母高度</b> </p>
+    <p> 通过让一个P 标签高度==父元素高度，并且设置 vertical-align: middle; 让父元素基线刚好设置在 height/2 - x-height/2 。这样内部行内元素有  vertical-align: middle; 就会垂直居中</p>
+    <hr>
+
+
+
+
+<div class="parent4"></div>
+<div class="parent4" style="margin: 0 0 25px 0;">x</div>
+<div class="parent5"></div>
+<div class="parent5" style="overflow:auto;">x</div>
+<div class="parent5">x</div>
+<div class="parent5"></div>
+    
+    <p><br> 第一个出现错位的原因：<br> 行内块元素默认基线在底部，如果有文本那么基线位置就是文本底部，例：“x” 底部，“p” 上半部分圈的底部 </p>
+    <p> overflow:auto 创建了一个新的块级上下文 </p>
+
+    <hr>
+    
+
+</body>
+</html>
