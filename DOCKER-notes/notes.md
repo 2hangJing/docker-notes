@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2020-03-04 17:12:00
+ * @LastEditTime: 2020-03-09 18:00:10
  -->
 # docker 笔记
 准备将自己的博客系统装Ubuntu中，本地开发环境是win不太方便学习，docker正好解决这个问题，先学习下docker。
@@ -10,6 +10,9 @@
 *参考*  
 *<https://yeasy.gitbooks.io/docker_practice/image/list.html>*
 *<https://philipzheng.gitbooks.io/docker_practice/content/dockerfile/build_image.html>*
+
+*docker 指令*  
+*<https://joshhu.gitbooks.io/dockercommands/content/Containers/DockerRun.html>*
 
 ## 其他 ##
 
