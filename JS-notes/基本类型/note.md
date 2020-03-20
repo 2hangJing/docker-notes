@@ -2,16 +2,16 @@
  * @Author: monai
  * @Date: 2020-03-19 16:10:29
  * @LastEditors: monai
- * @LastEditTime: 2020-03-19 18:14:04
+ * @LastEditTime: 2020-03-20 15:40:00
  -->
 
 # JS 数据类型总结
 
 JS总共又8种数据类型：  
-7种基本类型：String Number Null Undefined Boolean Symbol BigInt  
+7种原始类型：String Number Null Undefined Boolean Symbol BigInt  
 1种引用类型：Object ( Array、JSON、Date 等都是内置对象 )  
 
-**基本类型的值都是不可改变的，赋值改变的是变量值而非基本类型的值。**
+**原始类型的值称为“原始值”，原始值是不可改变的，赋值改变的是变量值而非原始值本身。**
 ```javascript
     let a = [];
     a.push(0); //a ==> [0]
@@ -84,7 +84,18 @@ BigInt类型是 JavaScript 中的一个基础的数值类型，可以用任意�
 bigint 也有包装对象，和Symbol 类似。
 
 ### null
-null 为 NUll类型的唯一值，代表对象的值未设置。
+null 为 NUll类型的唯一值，代表对象的值未设置。没有包装对象。
 
 ### undefined
-undefined 为 Undefined 的唯一值，代表变量的值未设置。
+undefined 为 Undefined 的唯一值，代表变量的值未设置。没有包装对象。
+
+### object
+Object 构造函数为给定值创建一个对象包装器。如果给定值是 null 或 undefined，将会创建并返回一个空对象，否则，将返回一个与给定值对应类型的对象。  
+示例：
+```javascript
+    let a = new Object(10);
+
+    a instanceof Number; //true
+```
+
+当以非构造函数形式被调用时，Object 等同于 new Object()。前面 symbol 代码示例中就没有使用 new 操作符。
