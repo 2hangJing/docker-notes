@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-03-23 17:36:49
  * @LastEditors: monai
- * @LastEditTime: 2020-03-23 18:19:55
+ * @LastEditTime: 2020-03-24 14:25:51
  -->
 # JS 数据类型判断
 
@@ -24,6 +24,22 @@ typeof 可以判断出很多数据类型，但是到 null 和部分内置对象�
 * .....
 
 而 null 的机械码全部是0，所以 typeof 在判断 null 的时候会出现”object“的错误问题。
+
+typeof 可以返回一下的值：
+| 类型 | 示例 | 返回值 |
+| ---- | ---- |---- |
+| 字符串 | typeof 'abc' | string |
+| 数  值 | typeof 123 | number |
+| 布  尔 | typeof true | boolean |
+| Function | typeof function(){} | function |
+| Undefined | typeof undefined | undefined |
+| BigInt | let a = BigInt(1); typeof a; | bigint |
+| Symbol | let a = Symbol(); typeof a; | symbol |
+| null | typeof null | object |
+| Map | let a = new Map(); typeof a; | object |
+| Set | let a = new Set(); typeof a;  | object |
+| Array | typeof [] | object |
+| Object | typeof {} | object |
 
 ## instanceof  
 instanceof 语法是判断：右边参数的 prototype 是否在左边参数的原型链上（`__proto__`）。**注意：右边的参数如果没有 prototype，只有 `__proto__` 那么会JS报错，报错提示如下：**  
@@ -60,7 +76,7 @@ instanceof 语法是判断：右边参数的 prototype 是否在左边参数的�
 Object.prototype.toString.call() 判断的最为齐全，可以直接判断出是哪些类型。  
 Object.prototype.toString 方法是JS中内置的获取 `ES5: [[clasee]] ES6:internal slot ` 类型的方法，也是唯一的方法。  
 Object.toString 方法返回的是一个函数，而 Object.prototype.toString 则是返回`[object xxx]`这样的字符串。  
-**注意：Array、String 等toString 都会返回类似 "function Date() { [native code] }"，而 Math.toString() 则会直接返回 "[object Math]"**
+**注意：Array、String 等toString 都会返回 "function Date() { [native code] }"，而 只有Math.toString() 则会直接返回 "[object Math]"**  
 示例：
 ```javascript
     Error.toString();
@@ -71,5 +87,28 @@ Object.toString 方法返回的是一个函数，而 Object.prototype.toString �
     // "[object Error]"
 
     Math.toString();
-    // "[object Math]"
+    // "[object Math]"  
+
+    Object.prototype.toString.call(Math);
+    // "[object Math]"  
 ```
+
+**注意：特殊示例"** 
+```javascript
+    let a = Object(BigInt(1));
+    Object.prototype.toString.call(a);
+    //  "[object BigInt]"
+
+    let a = Object(BigInt(1));
+    a.__proto__ = Object.prototype;
+    Object.prototype.toString.call(a);
+    //  "[object Object]"
+```
+**注意：再来看另外一个"** 
+```javascript
+    let a = [];
+    a.__proto__ = Object.prototype;
+    Object.prototype.toString.call(a)
+    //  "[object Array]"
+```
+这里有点疑问我也没弄太懂。常规使用判断方法足够，有机会看到相关的知识再更新吧。我估计是涉及到一些内置类型存储的规则问题。
