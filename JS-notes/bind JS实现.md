@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-03-31 16:41:07
  * @LastEditors: monai
- * @LastEditTime: 2020-03-31 18:04:44
+ * @LastEditTime: 2020-04-01 13:44:18
  -->
 # bind JS实现
 
@@ -89,13 +89,29 @@ bind() 方法创建一个新的函数（术语：绑定函数 bound function，B
 ```javascript
     let [obj1, obj2] = [{id: 1}, {id: 2}];
     
-    function fun(a, b){ console.log(this.id) };
+    function fun(a, b){ this.name = 'fun'; console.log(this.id) };
 
     //  正常调用
-    let bindFun = fun.bind(obj1);
+    let bindFun = fun._bind(obj1);
     bindFun(); // 1
 
     //  重复调用
-    let bindFun2 = bindFun.bind(obj2);
+    let bindFun2 = bindFun._bind(obj2);
     bindFun2() // 1
+    //  着重记录下自己写的_bind重复绑定为什么没有生效问题，因为也没做特殊处理。
+    //  第一次_bind后返回的是 bindFun 函数，而正真的执行函数则在func.call 或者 new fun 这一步，所以重复_bind 操作只会给上一次 _bind 返回的绑定函数： bindFun 绑定 this 上下文，而真正的执行函数 func.call 或者 new fun 则在第一次 _bind 时已经确定了执行的类型以及 context，所以重复绑定自然无效。
+
+    //  new 运算符调用
+    let oo = new bindFun();
+    console.log(oo); // fun {name: "fun"}， 没有 id: 1，说明 bind(obj1)无效。
 ```
+
+通过 bind 的原理实现加深了 new 操作符、call、apply 的原理理解。   
+
+后面打算先在本地 docker 模拟ubuntu搭建 blog 的环境，然后再把线上blog 由win切换成ubuntu。
+第一进一步学习一点linux 相关的操作，第二docker本身对前端有一定帮助，可以部署一套开发环境，以后在哪开发都是 dockerfile 一步安装解决。  
+后面就把blog的编辑器切换成markdown ，顺便解决markdown转html、code美化等相关的问题。   
+
+**记录：**   
+**markdown转 html ：https://github.com/showdownjs/showdown**   
+**code 美化：https://highlightjs.org/**
