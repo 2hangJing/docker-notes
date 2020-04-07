@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2020-03-09 18:00:10
+ * @LastEditTime: 2020-04-07 11:21:00
  -->
 # docker 笔记
 准备将自己的博客系统装Ubuntu中，本地开发环境是win不太方便学习，docker正好解决这个问题，先学习下docker。
@@ -87,3 +87,21 @@ Docker 还存在一个特殊的镜像，名为 scratch。这个镜像是虚拟�
 
 RUN 用来执行命令行指令的，其有两种语法格式：*shell* 格式，*exec* 格式。命令较长是使用 *\\* 换行，使用 *&&* 链接命令。
 
+
+## 注意
+
+**1. win10 docker 中运行shell 问题**
+在win10 版本得docker 环境中选择 ubuntu系统，执行 shell 可能会出现 **sh脚本异常：/bin/sh^M:bad interpreter: No such file or directory** 这个问题，原因就是win系统中编辑的shell编码格式不同，有可能是一些不可见字符导致异常。  
+解决办法：  
+1.在windows下转换：  
+利用一些编辑器如UltraEdit或EditPlus等工具先将脚本编码转换，再放到Linux中执行。转换方式如下（UltraEdit）：File-->Conversions-->DOS->UNIX即可。  
+
+2.在Linux中转换：  
+首先要确保文件有可执行权限 `chmod 777 filename`，然后修改文件格式 `vi filename`  
+先查看文件格式  
+ `:set ff` 或 `:set fileformat`  
+显示如下  
+`fileformat=dos` 或 `fileformat=unix`  
+再修改文件格式  
+`:set ff=unix` 或 `:set fileformat=unix`  
+`:wq` 保存退出，最后再执行文件 `./filename.sh`
