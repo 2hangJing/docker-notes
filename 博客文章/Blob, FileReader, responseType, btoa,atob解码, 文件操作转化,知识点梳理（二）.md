@@ -2,7 +2,7 @@
 * @Author: monai
 * @Date: 2020-05-09 18:37:59
  * @LastEditors: monai
- * @LastEditTime: 2020-05-09 18:51:08
+ * @LastEditTime: 2020-05-11 10:47:55
 -->
 > [**Blob, FileReader, responseType, btoa,atob解码, 文件操作转化,知识点梳理（一）**](http://www.ismoon.cn/article_detail?id=17)<div>总结太长分为俩个文章记录。</div>
 
@@ -135,7 +135,7 @@ Data URLs 顾名思义它首先是一个 URL，再者这个 URL 本身包含有�
 
 1.  data: 前缀。
 2.  mediatype：MIME String，表示这个 Data URLs 所代表的文件类型，默认值为：text/plain;charset=US-ASCII
-;base64：携带的数据是否经过Base64 编码，像fr.readAsDataURL返回的Data URLs 所包含的图片信息就是Base64 编码之后的数据。
+;base64：携带的数据是否经过 Base64 编码，像fr.readAsDataURL返回的 Data URLs 所包含的图片信息就是Base64 编码之后的数据。
 1.  `<data>`：携带的数据。
 
 上面说到 'Data URLs 顾名思义它首先是一个URL'，既然是一个 URL 那么自然可以在浏览器的地址栏输入：
@@ -143,9 +143,7 @@ Data URLs 顾名思义它首先是一个 URL，再者这个 URL 本身包含有�
 
 输入之后可以看到一个 H2 标签的 Moon 的客栈。
 
-
 > DataURL 标准收录在RFC2397。DataURL 标准[RFC2397](https://tools.ietf.org/html/rfc2397)
-
 
 ### 2. Base64编码
 
@@ -163,17 +161,17 @@ base64编码的出生是为了解决一些二进制字符无法展示这个问�
 
 如果别人给你发一段这样的数据，恐怕你是不知道这是想表达什么。
 
-如果我们使用使用fr.readAsDataURL 来处理获得的数据。
+如果我们使用使用 fr.readAsDataURL 来处理获得的数据。
 
 ![](https://www.ismoon.cn/static/4064e1141c5662f458c6aaafd6f006d2.png)
 
 很明显不再出现那些没法显示的二进制字符了。
 
-Base64 因为只含有 64 个字符，所以最大的索引63转换成二进制为：111111 ，只用6 bit就可以存储。
+Base64 因为只含有 64 个字符，所以最大的索引 63 转换成二进制为：111111 ，只用 6 bit 就可以存储。
 
-但是不管是ASCII还是Unicode编码一个字符占用一个字节也就是8bit，由此Base64便使用原数据3个字节为一组也就是3*8=24bit，转换为4组 4*6=24bit方式来进行对应存储。
+但是不管是 ASCII 还是 Unicode 编码一个字符占用一个字节也就是 8bit，由此 Base64 便使用原数据 3 个字节为一组也就是  3\*8=24bit，转换为4组 4\*6=24bit 方式来进行对应存储。
 
-由此造成的问题就是体积增大，因为4组只有6bit有效，有2bit填充0，所以体积增大33%。
+由此造成的问题就是体积增大，因为 4 组只有 6bit 有效，有 2bit 填充 0，所以体积增大33%。
 
 具体转换流程用一张网图展示：
 
@@ -195,7 +193,7 @@ JavaScript本身带有Base64编码、解码API：
 ## 六. 数据转化总结、实例
 
 **1. http图片资源转本地ArrayBuffer**
-<pre>`
+```javascript
 let xml = new XMLHttpRequest();
 
     xml.responseType = 'arraybuffer';
@@ -211,31 +209,35 @@ let xml = new XMLHttpRequest();
             let imgArr = xml.response;
         }
     }
-`</pre>
+```
 
 **2. ArrayBuffer 转 Blob**
-<pre>`
+```javascript
 let imgBlob = new Blob([imgArr]);
 
-console.log(imgBlob);`</pre>
+console.log(imgBlob);
+```
 
 **3. Blob转资源URL**
-<pre>`
+```javascript
 let img = new Image();
 
 img.src = window.URL.createObjectURL(imgBlob);
 
-document.body.appendChild(img);`</pre>
+document.body.appendChild(img);
+```
 
 **3. String转Blob**
-<pre>`
+```javascript
 let str = 'Moon的客栈';
 
 let strBlob = new Blob([str]);
 
-console.log(strBlob);`</pre>
+console.log(strBlob);
+```
 
-<div>**4.****Blob****转****String**</div><div><pre>`
+**4. Blob转String**
+```javascript
 let fr = new FileReader();
 
 fr.readAsText(strBlob);
@@ -243,14 +245,19 @@ fr.readAsText(strBlob);
 fr.onload = function(){
 
     console.log(fr.result);
-}`</pre>
+}
+```
 
-</div><div>**5.****Blob****转blob URL资源链接**</div><div><pre>`
+**5.Blob转blob URL资源链接**
+```javascript
 let url = URL.createObjectURL(strBlob);
 
-console.log(url);`</pre>
+console.log(url);
+```
 
-</div><div>**6.****Blob、file转DataURL**</div><div><pre>`let fr = new FileReader();
+**6.Blob、file转DataURL**
+```javascript 
+let fr = new FileReader();
 
 fr.readAsDataURL(strBlob);
 
@@ -258,11 +265,10 @@ fr.onload = function(){
 
     console.log(fr.result);
 }
-
-</div>
+```
 
 ## 七.总结
 
-<div>通过这几天的学习、记录，基本前端一些常用的文件类转化操作都梳理清楚了。</div><div>
-</div><div>最近了解的音频类API真的种类繁多，配合ArrayBuffer可以把一个音频的能量频谱可视化展示出来，很有意思。</div><div>
-</div>> [音乐频谱可视化](http://www.ismoon.cn/audio)
+通过这几天的学习、记录，基本前端一些常用的文件类转化操作都梳理清楚了。
+最近了解的音频类API真的种类繁多，配合 ArrayBuffer 可以把一个音频的能量频谱可视化展示出来，很有意思。
+> [音乐频谱可视化](http://www.ismoon.cn/audio)
