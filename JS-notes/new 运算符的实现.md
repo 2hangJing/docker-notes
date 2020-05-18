@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-03-25 13:38:53
  * @LastEditors: monai
- * @LastEditTime: 2020-03-31 17:56:57
+ * @LastEditTime: 2020-05-18 16:54:02
  -->
 # new 运算符原理以及实现
 
@@ -21,32 +21,32 @@ new 运算符创建一个用户定义的对象类型的实例或具有构造函�
     
 知道了new 运算符做了什么，下面就用JS来实现一下：  
 ```javascript
-    function newCustom(constructor, ...args){
-        //  创建一个对象，并且将对象的 __proto__ 链接到 构造函数的 prototype
-        let obj = Object.create(constructor.prototype);
+function newCustom(constructor, ...args){
+    //  创建一个对象，并且将对象的 __proto__ 链接到 构造函数的 prototype
+    let obj = Object.create(constructor.prototype);
 
-        //  1. 确定构造函数返回值
-        //  2. 通过 call 方法让 obj 继承构造函数 this 对象，从而让 obj 有构造函数的属性
-        let result = constructor.call(obj, ...args);
+    //  1. 确定构造函数返回值
+    //  2. 通过 call 方法让 obj 继承构造函数 this 对象，从而让 obj 有构造函数的属性
+    let result = constructor.call(obj, ...args);
 
-        //  构造函数返回值是对象则返回改对象，否则返回 obj
-        return result instanceof Object ? result : obj;
-    }
+    //  构造函数返回值是对象则返回改对象，否则返回 obj
+    return result instanceof Object ? result : obj;
+}
 
-    function Foo(a, b){
-        this.a = a;
-        this.b = b;
-    }
+function Foo(a, b){
+    this.a = a;
+    this.b = b;
+}
 
-    Foo.prototype.name = function (){
-        return 'Foo';
-    }
+Foo.prototype.name = function (){
+    return 'Foo';
+}
 
-    let obj = newCustom(Foo, 'aa', 'bb');
+let obj = newCustom(Foo, 'aa', 'bb');
 
-    console.log(obj.a); // aa
-    console.log(obj.b); // bb
-    console.log(obj.name()); // Foo
+console.log(obj.a); // aa
+console.log(obj.b); // bb
+console.log(obj.name()); // Foo
 ```
 
 
