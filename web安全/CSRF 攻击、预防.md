@@ -2,34 +2,51 @@
  * @Author: monai
  * @Date: 2020-05-20 17:58:48
  * @LastEditors: monai
- * @LastEditTime: 2020-05-21 18:44:13
+ * @LastEditTime: 2020-05-28 17:48:35
 --> 
 # CSFR 是什么？
 
 CSFR 是跨站请求伪造攻击（Cross-site request forgery）的缩写。CSFR 攻击原理如下：
 1. 用户登陆 a.com ，a.com 返回用户的登陆凭证 cookie。
 2. 诱导用户进入 b.com ，b.com 直接跨域请求 a.com ，并携带 a.com 的 cookie。
-3. a.com 误认为是 用户自己操作，用户数据被修改、信息泄露。
+3. a.com 误认为是用户自己操作，用户数据被修改、信息泄露。
 
-## XSS 分类
+因为浏览器发送请求会自动带上 cookie（ajax 需要单独设置） 所以可以通过 img form 标签去跨域请求，如果被攻击的网站没有相关防御那么这条攻击请求就会被认为是用户自己操作的。
 
-XSS 没有规定的分类，网上查到基本都是：反射型、存储型、DOM 型三类。为了方便理解我个人分为两大类：存储型、非存储型，或者 DMO 型、非 DOM 型。  
+## CSRF 类型
 
-#### 按照存储型分类：
-1. 存储型：攻击者利用例如留言板模块，将攻击代码注入到网站数据库中，其他用户只要打开有留言列表网页都会被攻击。
-2. 非存储型：攻击者制造一个带有恶意代码的 URL ，用户点击后 URL 上的恶意代码被执行。其他用户访问正常的 URL 没有问题。
+根据伪造的请求类型进行分类，可以分为如下几类：
+### GET类型
+1. 通过 img 标签中的 src 施行 GET 请求。
+```html
+<img src='http://wwww.a.com/user/score?to=xiaoming&count=10000'>
+```
+2. 通过 a 标签中 href 施行 GET 请求。
+```html
+<a href='http://wwww.a.com/user/score?to=xiaoming&count=10000'>免费会员</a>
+```
+通过 a 标签的攻击需要用户点击所以比较少，没有直接通过 img 标签攻击方便。
 
-#### 按照恶意代码渲染位置分类：
-1. DOM 型：用户访问 URL 后，服务端返回静态文件，前端通过 js 渲染页面，其中 img 通过动态的 src、js 通过 `innerHTML` 等，导致恶意代码执行，用户信息泄露，被攻击。
-2. 非 DOM 型：用户访问 URL 后，服务端渲染页面，前端直接展示，导致恶意代码被执行，用户信息泄露，被攻击。
+### POST
+通过内嵌在页面中的 form 表单来实施攻击。
+```html
+<form method="POST" action="http://wwww.a.com/user/score">
+    <input type="hidden" name="count" value="5000"/>
+    <input type="hidden" name="to" value="xiaoming"/>
+</form>
+<script> 
+    document.forms[0].submit();
+</script>
+```
 
-## XSS 预防.
+## CSRF 特点
+1. 发出攻击的是第三方网站。
+2. 利用浏览器发送请求自带目标网站的 cookie 特性，只能伪造用户请求，无法真正获取用户登陆凭证与信息。
 
-预防 XSS 攻击主要有两点：
-1. 一个是输入过程对字符串中相关敏感字符过滤，避免恶意代码被存储到数据库，从而导致大面积页面都被污染。
-2. 一个是写代码过程中要注意。前端渲染时 `innerHTML`，`setTimeout()` 这种拼接字符串要小心，因为这些操作都可以将字符串当yi作代码运行。而在服务端渲染时，`<a href="">`，`<img src="">` 与内联事件 `onlick`，`onmouseover` 等拼接字符串时要小心，避免将未转义的代码直接拼接。
+## CSFR 预防
+CSFR 预防主要有一下几种：
+1. 利用 token 模式，登陆凭证从 cookie 切换到 token ，因为 CSRF 是利用浏览器自动携带 cookie 请求的原理，那么换成 token 模式后自然解决了 CSRF 问题，但是此处注意 XSS 攻击。
+2. 后台 API 中校验请求头中的 Origin\Referer 字段，但是这两个字段都有一定的漏洞所以不太推荐。
+3. 双重 cookie ，登陆凭证依旧使用 cookie ，但是每次请求时带上 cookie 字段。后端则是校验请求头中的 cookie 并且校验携带的参数中的 cookie 字段，原因是利用了 CSRF 无法获取到 cookie 只能利用浏览器自动携带的原理，同 1。
 
-其他的方式呢？
-1. 服务端给敏感 cookie 设置 http-only 防止网站被攻击后通过 JS 拿到用户的 cookie ，从而模拟用户伪造请求。
-2. 用户的重要操作增加短信验证码验证身份。
-3. 对用户输入的表单增加长度限制，虽然不可靠，但是增加了 XSS 攻击的难度。
+
