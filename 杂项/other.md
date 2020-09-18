@@ -1,6 +1,10 @@
 https://thisthat.dev/
 https://github.com/ljianshu/Blog/issues/57
 
+# other
+1. 各种题目
+https://github.com/Advanced-Frontend/Daily-Interview-Question/blob/master/datum/summary.md
+
 # JS
 1. encodeURIComponent 与 encodeURI 区别
 ![alt 属性文本](./image/encodeURIComponent%20与%20encodeURI%20区别.png)

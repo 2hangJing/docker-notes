@@ -2,11 +2,11 @@
  * @Author: monai
  * @Date: 2020-03-23 17:36:49
  * @LastEditors: monai
- * @LastEditTime: 2020-05-11 14:18:16
+ * @LastEditTime: 2020-09-17 10:27:02
  -->
 # JS 数据类型判断
 
-常用的typeOf、instanceof、Object.prototype.toString.call()，其中Object.prototype.toString.call() 效果最好，基本类型、内置对象多能区分出来。
+常用的typeOf、instanceof、Object.prototype.toString.call()，其中 Object.prototype.toString.call() 效果最好，基本类型、内置对象多能区分出来。
 
 
 ## typeof  
@@ -73,9 +73,15 @@ instanceof 语法是判断：右边参数的 prototype 是否在左边参数的�
 ```
 
 ## Object.prototype.toString.call()  
-Object.prototype.toString.call() 判断的最为齐全，可以直接判断出是哪些类型。  
+
+**简写：toString.call()**
+
+Object.prototype.toString.call() 判断的最为齐全，可以直接判断出是哪些类型。 
+
 Object.prototype.toString 方法是JS中内置的获取 `ES5: [[clasee]] ES6:internal slot ` 类型的方法，也是唯一的方法。  
+
 Object.toString 方法返回的是一个函数，而 Object.prototype.toString 则是返回`[object xxx]`这样的字符串。  
+
 **注意：Array、String 等toString 都会返回 "function Date() { [native code] }"，而只有Math.toString() 则会直接返回 "[object Math]"**  
 示例：
 ```javascript
