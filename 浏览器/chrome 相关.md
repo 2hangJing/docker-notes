@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-05-21 10:44:02
  * @LastEditors: monai
- * @LastEditTime: 2020-06-29 17:18:00
+ * @LastEditTime: 2020-09-30 11:46:17
 --> 
 
 <!-- https://www.frontendwingman.com/Chrome/C03/object&function.html -->
@@ -26,3 +26,17 @@
 1. 打开 chrome://flags/#out-of-blink-cors。
 2. Out of blink CORS 设置为 Disabled。
 3. 重启。
+
+## chrome 跨域 cookie 配置
+
+Chrome浏览器从80版本开始更新默认的SameSite策略，新的策略为：在所有的 Cookie 中默认设置 SameSite=Lax 来屏蔽部分第三方 Cookie。
+
+开发中取消设置:
+
+Chrome浏览器地址栏输入 chrome://flags/
+
+找到：SameSite by default cookies、Cookies without SameSite must be secure设置上面这两项设置成 Disable
+
+重启浏览器 
+
+具体：https://zhuanlan.zhihu.com/p/259879164
