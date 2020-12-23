@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-04-23 21:51:38
  * @LastEditors: monai
- * @LastEditTime: 2020-04-23 21:51:38
+ * @LastEditTime: 2020-12-23 17:45:43
  -->
 javascript 是一门单线程的脚本语言，虽然是单线程但是有很多异步的API来帮助开发者解决线程的阻塞问题。比如：`onClick` 注册的回调函数、必不可少的 `ajax` 等等...但是 javascript 
 运行环境是如何做到单线程却又不是一直阻塞线程等待各种异步操作完成才继续执行操作的呢？
@@ -70,8 +70,8 @@ new Promise((res, rej)=>{ res() }).then(e=>{ console.log(2) });
 4.更新UI，UI rendering，同时阻塞 javascript 执行。并且继续重复第一步。
 
 以上便是一整个 event loop 流程，从流程中我们可以看到有俩个“任务队列”，这俩个队列实例化到 javascript 中的API 便是：
-1. Macrotask queue --> `setTimeout` || `setInterval` || javascript代码
-2. Microtask queue --> `Promise.then()`
+1. Macrotask queue --> `setTimeout`、`setInterval`、`setImmediate`、javascript代码、I/O、UI渲染
+2. Microtask queue --> `Promise.then()`、`Object.observe`、`MutationObserver`
 
 至此一个完整的 event loop 流程便完全说完了。
 
