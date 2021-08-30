@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2021-08-03 13:48:38
  * @LastEditors: monai
- * @LastEditTime: 2021-08-06 14:26:10
+ * @LastEditTime: 2021-08-30 16:39:01
 -->
 # Vue3 响应式原理解析【第一期】
 
@@ -132,3 +132,11 @@ const trigger = (target, propKey)=>{
 ```
 
 
+### 参考
+https://juejin.cn/post/6859271079764951047#heading-0
+https://bearcub.club/2020/05/09/vue3-0-reactivity%E8%AF%A6%E8%A7%A3/#track
+https://zhuanlan.zhihu.com/p/346256248
+https://segmentfault.com/a/1190000023344847
+https://segmentfault.com/a/1190000040187661
+https://lq782655835.github.io/blogs/vue/vue3-code-3.api-analysis.html
+https://vue3js.cn/reactivity/reactive.spec.html
