@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-03-27 17:34:45
  * @LastEditors: monai
- * @LastEditTime: 2020-05-18 18:45:07
+ * @LastEditTime: 2021-09-01 18:44:39
  -->
 # apply、call JS实现
 
@@ -16,7 +16,7 @@ function customCall(context, ...arg){
     // let scope = Object.assign({}, context || window);
 
     //  虽然可以避免污染问题，但是 call/apply 本身没有处理，而是选择了继承
-    //  这里也是传入context 可以继承调用函数的本身属性起点原因
+    //  
     let scope = context || window;
 
     //  防止 scope 中有相同 key 被覆盖。  
@@ -25,6 +25,8 @@ function customCall(context, ...arg){
     //  this 为调用的函数本身。
     scope[key] = this;
 
+    //  函数谁调用， this 指向谁，通过 scope 调用函数，此时执行上下文为 scope。
+    //  scope[key](...arg) 函数执行过程中 this 为 scope，所以函数中所有 this.x = x，操作全部在 scope 对象上执行，所以这也是传入的 context 可以继承调用函数的本身属性的根本原因。
     //  收集返回值、...arg 多参数传参
     let result = scope[key](...arg);
 

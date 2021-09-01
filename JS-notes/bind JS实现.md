@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-03-31 16:41:07
  * @LastEditors: monai
- * @LastEditTime: 2020-05-18 18:52:17
+ * @LastEditTime: 2021-09-01 18:18:12
  -->
 # bind JS实现
 
@@ -58,29 +58,23 @@ let newObj = new bind(); // func {name: "func"}，new 操作忽略了传入的 
 function _bind(context, ...bindArg){
     //  调用的函数本身
     let func = this;
-
     function bindFun(...arg){
-
         let result;
-        //  直接调用、object调用，此时的 this 为 window、object 。所以通过 this 原型链上是否有 bindFun.prototype 可以判断出是否使用 new 元算符调用。
+        //  直接调用、object调用，此时的 this 为 window、object 。所以通过 this 原型链上是否有 bindFun.prototype 可以判断出是否使用 new 运算符调用。
         //  使用 new 运算符时会创建一个新对象，新对象.__proto__'链接'构造函数.protytype，然后再把这个对象作为 this 的上下文，所以 this.__proto__ === 构造函数.prototype。 
         if(this instanceof bindFun){
-            
             //  new 操作符调用
             result = new func(...bindArg, ...arg);
         }else{
-            
             //  直接调用
             result = func.call(context, ...bindArg, ...arg);
         }
         //  返回值
         return result;
     }
-    
     //  bind 返回的 '绑定函数'
     return bindFun;
 }
-
 Function.prototype._bind = _bind;
 ```
 
