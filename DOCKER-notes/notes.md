@@ -2,22 +2,26 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2020-04-07 11:21:00
+ * @LastEditTime: 2021-09-07 14:34:45
  -->
 # docker 笔记
 准备将自己的博客系统装Ubuntu中，本地开发环境是win不太方便学习，docker正好解决这个问题，先学习下docker。
 
 *参考*  
-*<https://yeasy.gitbooks.io/docker_practice/image/list.html>*
-*<https://philipzheng.gitbooks.io/docker_practice/content/dockerfile/build_image.html>*
+<https://yeasy.gitbooks.io/docker_practice/image/list.html>
+<https://philipzheng.gitbooks.io/docker_practice/content/dockerfile/build_image.html>
 
 *docker 指令*  
-*<https://joshhu.gitbooks.io/dockercommands/content/Containers/DockerRun.html>*
+<https://joshhu.gitbooks.io/dockercommands/content/Containers/DockerRun.html>
+<https://yeasy.gitbook.io/docker_practice/container/attach_exec>
 
 ## 其他 ##
-
 .dockerignore  
 <https://qhh.me/2019/02/24/dockerignore-%E6%96%87%E4%BB%B6%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/>
+
+## 常用指令
+- 列举 container: docker container ls
+- 进入 container: docker exec -it bash 
 
 ## image 镜像
 
@@ -49,8 +53,8 @@ docker的镜像是多层存储结构，可以复用、继承。不同的镜像�
 
 **3. 删除镜像**
 
-*ocker image rm [选项] <镜像1> [<镜像2> ...]*  
-*ocker image rm --help* 展示相关选项
+*docker image rm [选项] <镜像1> [<镜像2> ...]*  
+*docker image rm --help* 展示相关选项
 
 删除本地镜像，可以使用镜像的短ID、长ID、镜像名、摘要。
 
@@ -75,7 +79,7 @@ Dockerfile 是一个文本文件，其内包含了一条条的指令(*Instructio
 指定一个目录为当前上下文路径，**.** 代表当前目录，在指令中就是表是当前目录指定为上下文路径。默认情况下，如果不额外指定 Dockerfile 的话，会将上下文目录下的名为 Dockerfile 的文件作为 Dockerfile。  
 **注意：此处并不是指定 Dockerfile 文件的路径。**
 
-**1.FROM 指令**  
+**Ⅰ.FROM 指令**  
 
 *FROM image[:tag]*  
 FROM 指令指定基础镜像，参数可以是**image**或者**image:tag**两种格式。  
@@ -83,7 +87,7 @@ FROM *scratch*
 Docker 还存在一个特殊的镜像，名为 scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。
 
 
-**1.RUN 指令**  
+**Ⅱ.RUN 指令**  
 
 RUN 用来执行命令行指令的，其有两种语法格式：*shell* 格式，*exec* 格式。命令较长是使用 *\\* 换行，使用 *&&* 链接命令。
 

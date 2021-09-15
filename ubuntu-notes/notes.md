@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2020-04-06 10:29:50
+ * @LastEditTime: 2021-09-08 16:30:01
  -->
 # ubuntu 笔记
 在学docker中 linux 部分指令以及部分软件安装、文件拷贝等操作记录
@@ -29,6 +29,12 @@
 
 **7. touch xx.xx**  
 创建名字为 xx.xx 的文件。
+
+**8.1 tail -n 50 ./xx.log**
+静态（当前文件状态）查看 xx.log 文件后 50行。
+**8.2 tail -f ./xx.log**
+动态（当前文件改变查看中也会动态改变）查看 xx.log。
+
 
 
 ## 软件 ##
