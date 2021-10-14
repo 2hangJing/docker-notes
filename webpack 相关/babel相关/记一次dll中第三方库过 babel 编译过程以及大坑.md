@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2021-10-14 09:49:17
  * @LastEditors: monai
- * @LastEditTime: 2021-10-14 18:29:40
+ * @LastEditTime: 2021-10-14 18:37:19
 -->
 ## 记：dll 包中 axios 过 babel 编译遇到的问题
 
@@ -15,9 +15,9 @@ sentry 中频繁报错：`TypeError c(...).then(...).catch(...).finally is not a
 2. 项目使用了 webpack.DllPlugin 构建了 axios、vue... 等 dll 包，第三方库默认 babel 不处理，所以 axios 没有经过 babel 编译。
 
 ### 二、解决
-1. **修改 .babelrc，为 babel.config.json。** 
+**1. 修改 .babelrc，为 babel.config.json。** 
 
-2. **node_modules 中的库默认是不过 babel 编译的，** 修改 webpack.configDll.js 如下：
+**2. node_modules 中的库默认是不过 babel 编译的，** 修改 webpack.configDll.js 如下：
 ``` javascript
 module.exports= {
     module:{
@@ -34,7 +34,7 @@ module.exports= {
     }
 }
 ```
-3. **修改 babel.config.json 中 sourceType 配置项。(原因记录在后面)** 修改如下：
+**3. 修改 babel.config.json 中 sourceType 配置项。(原因记录在后面)** 修改如下：
 ``` json
 {
     "presets": [],
@@ -43,7 +43,7 @@ module.exports= {
     "plugins": []
 }
 ```
-4. 重新编译 dll 包，问题解决。
+**4. 重新编译 dll 包，问题解决。**
 
 ### 三、原理记录
 **1. 为什么 babel 需要编译 node_modules 中的库时需要修改配置文件名称？**
@@ -56,7 +56,7 @@ module.exports= {
 ``` javascript
 // 源码
 new Promise(res=> res())
-// 编译后
+// 编译后，
 var _Promise = require("@babel/runtime-corejs3/core-js-stable/promise");
 new _Promise(function (res) { return res(); });
 ```
