@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2021-10-14 09:49:17
  * @LastEditors: monai
- * @LastEditTime: 2021-10-14 18:37:19
+ * @LastEditTime: 2021-10-14 18:38:36
 -->
 ## 记：dll 包中 axios 过 babel 编译遇到的问题
 
@@ -76,7 +76,7 @@ new Promise(res=> res())
 var _Promise = require("@babel/runtime-corejs3/core-js-stable/promise");
 new _Promise(function (res) { return res(); });
 ```
-**axios 库源码模块引用是用了 CommonJS 模块类型，所以 babel 编译时需要 将配置项修改为 sourceType: unambiguous ，否则编译后 axios 文件中 ESModule，CommonJS 混用会报错**
+**axios 库源码模块引用是用了 CommonJS ，所以 babel 编译时需要 将配置项修改为 sourceType: unambiguous ，否则编译后 axios 文件中 ESModule，CommonJS 混用会报错**
 
 
 
