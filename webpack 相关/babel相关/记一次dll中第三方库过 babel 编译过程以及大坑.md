@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2021-10-14 09:49:17
  * @LastEditors: monai
- * @LastEditTime: 2021-10-14 18:38:36
+ * @LastEditTime: 2021-10-15 09:39:33
 -->
 ## 记：dll 包中 axios 过 babel 编译遇到的问题
 
@@ -80,7 +80,7 @@ new _Promise(function (res) { return res(); });
 
 
 
-**参考:**
+### 四、参考
 1. https://babeljs.io/docs/en/configuration#babelconfigjson
 2. https://juejin.cn/post/6844903937900822536#heading-16
 3. https://juejin.cn/post/6844903669524086797
