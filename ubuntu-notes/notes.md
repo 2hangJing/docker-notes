@@ -2,10 +2,10 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2021-09-08 16:30:01
+ * @LastEditTime: 2022-05-27 14:43:55
  -->
 # ubuntu 笔记
-在学docker中 linux 部分指令以及部分软件安装、文件拷贝等操作记录
+在学 docker 中 linux 部分指令以及部分软件安装、文件拷贝等操作记录
 
 ## 指令 ##
 
@@ -32,6 +32,7 @@
 
 **8.1 tail -n 50 ./xx.log**
 静态（当前文件状态）查看 xx.log 文件后 50行。
+
 **8.2 tail -f ./xx.log**
 动态（当前文件改变查看中也会动态改变）查看 xx.log。
 
@@ -40,44 +41,45 @@
 ## 软件 ##
 **1. nginx**  
 
-下载：apt-get -y install nginx  
-配置文件目录：/etc/nginx/nginx.conf  
-启动：service nginx start  
-关闭：service nginx stop  
-重启：service nginx restart  
-重启：service nginx reload *不重启重新载入最新配置文件内容*
+下载：`apt-get -y install nginx`  
+配置文件目录：`/etc/nginx/nginx.conf`  
+启动：`service nginx start`  
+关闭：`service nginx stop`  
+重启：`service nginx restart`  
+重启：`service nginx reload` *不重启重新载入最新配置文件内容*
 
 **2. nvm**
 
-下载：curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash  
+下载：`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash`  
 下载完成后配置环境变量  
+```
 export NVM_DIR="$HOME/.nvm" \  
 && [ -s "$NVM_DIR/nvm.sh" ] \  
 && \. "$NVM_DIR/nvm.sh" \  
 && [ -s "$NVM_DIR/bash_completion" ] \  
 && \. "$NVM_DIR/bash_completion"  
-
+```
 node 下载指令：
-nvm install vx.x.x 示例： nvm install v10.16.0
+`nvm install vx.x.x` 示例：`nvm install v10.16.0`
 
 **2. curl**  
-下载：apt-get -y install curl
+下载：`apt-get -y install curl`
 
 **4. node**
 
 下一代 Debian 正式发行版的代号为 "bullseye" — 发布时间尚未确定  
-Debian 10（"buster"） — 当前的稳定版（stable）  
-Debian 9（"stretch"） — 旧的稳定版（oldstable）  
-Debian 8（"jessie"） — 更旧的稳定版（oldoldstable）  
-Debian 7（"wheezy"） — 被淘汰的稳定版  
-Debian 6.0（"squeeze"） — 被淘汰的稳定版  
-Debian GNU/Linux 5.0（"lenny"） — 被淘汰的稳定版  
-Debian GNU/Linux 4.0（"etch"） — 被淘汰的稳定版  
-Debian GNU/Linux 3.1（"sarge"） — 被淘汰的稳定版  
-Debian GNU/Linux 3.0（"woody"） — 被淘汰的稳定版  
-Debian GNU/Linux 2.2（"potato"） — 被淘汰的稳定版  
-Debian GNU/Linux 2.1（"slink"） — 被淘汰的稳定版  
-Debian GNU/Linux 2.0（"hamm"） — 被淘汰的稳定版  
+1. Debian 10（"buster"） — 当前的稳定版（stable）  
+2. Debian 9（"stretch"） — 旧的稳定版（oldstable）  
+3. Debian 8（"jessie"） — 更旧的稳定版（oldoldstable）  
+4. Debian 7（"wheezy"） — 被淘汰的稳定版  
+5. Debian 6.0（"squeeze"） — 被淘汰的稳定版  
+6. Debian GNU/Linux 5.0（"lenny"） — 被淘汰的稳定版  
+7. Debian GNU/Linux 4.0（"etch"） — 被淘汰的稳定版  
+8. Debian GNU/Linux 3.1（"sarge"） — 被淘汰的稳定版  
+9. Debian GNU/Linux 3.0（"woody"） — 被淘汰的稳定版  
+10. Debian GNU/Linux 2.2（"potato"） — 被淘汰的稳定版  
+11. Debian GNU/Linux 2.1（"slink"） — 被淘汰的稳定版  
+12. Debian GNU/Linux 2.0（"hamm"） — 被淘汰的稳定版  
 
 **5. mysql**
 
@@ -118,15 +120,18 @@ Debian GNU/Linux 2.0（"hamm"） — 被淘汰的稳定版
 
 **博客环境切换注意：**  
 ### **mysql:**
-1. `set password for "root"@localhost=password("123456");` 第一步设置 root 密码。
-2. `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';` 第二步切换链接 mysql 验证方式
-3. `update user set host = '%' where user = 'root';` 第三步将 root IP访问限制关闭，% 为全部IP均可以访问。
-4. `CREATE DATABASE zj_web;` 第四步创建数据库。
-5. `source /code/xxx.sql;` 第五步导入/code/xxx.sql 文件。
+1. `cat /etc/mysql/debian.cnf` 查看默认账号密码。
+2. `mysql -u root -p;` 进入mysql，root 账户或者默认 user 账号（第一步中查看的账号，版本不同可能不一样，默认：`debian-sys-maint`）。
+3. `use mysql;`
+4. `set password for "root"@localhost=password("123456");` 设置 root 密码。
+5. `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';` 第二步切换链接 mysql 验证方式
+6. `update user set host = '%' where user = 'root';` 第三步将 root IP访问限制关闭，% 为全部IP均可以访问。
+7. `CREATE DATABASE xxxx;` 第四步创建数据库。
+8. `source /code/xxx.sql;` 第五步导入/code/xxx.sql 文件。
 
 ### **File Zilla root用户连接配置 :**
 1. `sudo passwd root` 先设置 root 密码。
 2. `sudo -i` 切换到 root 用户。
 3. `sudo vim /etc/ssh/sshd_config` 进入ssh 配置，准备修改配置文件。
-4. `PermitRootLogin yes` 找到 PermitRootLogin， 将后面值修改为 yes，保存退出。
+4. `PermitRootLogin yes` 找到 PermitRootLogin，摁 i 进入编辑模式，将后面值修改为 yes，`esc` `:wq` 保存退出。
 5. `sudo service ssh restart` 重启 ssh 服务，重启后用 File Zilla root 账户链接。

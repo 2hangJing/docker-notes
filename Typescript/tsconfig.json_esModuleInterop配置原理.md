@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2021-09-15 11:45:58
  * @LastEditors: monai
- * @LastEditTime: 2021-09-15 14:48:51
+ * @LastEditTime: 2022-05-26 22:19:16
 -->
 ## 配置示例
 ```json
@@ -147,4 +147,4 @@ console.log(react);
 console.log({component: component, default: {component: component}});
 ```
 ## 参考
-知乎：https://zhuanlan.zhihu.com/p/148081795
+知乎：<https://zhuanlan.zhihu.com/p/148081795>

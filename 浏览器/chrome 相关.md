@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-05-21 10:44:02
  * @LastEditors: monai
- * @LastEditTime: 2020-09-30 11:46:17
+ * @LastEditTime: 2022-05-09 17:35:07
 --> 
 
 <!-- https://www.frontendwingman.com/Chrome/C03/object&function.html -->
@@ -40,3 +40,9 @@ Chrome浏览器地址栏输入 chrome://flags/
 重启浏览器 
 
 具体：https://zhuanlan.zhihu.com/p/259879164
+
+## chrome 关闭跨域
+1. 在电脑上新建一个目录，例如：`F:\Google\newUser`
+2. 在属性页面中的目标输入框里加上： `--disable-web-security --user-data-dir=F:\Google\newUser`
+   - 示例：`F:\Google\Chrome\Application\chrome.exe --disable-web-security --user-data-dir=F:\Google\newUser`
+3. 成功后打开浏览器会有 `--disable-web-security 稳定性和安全性会有所下降。` 提示。

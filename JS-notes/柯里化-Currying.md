@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2021-09-06 10:18:58
  * @LastEditors: monai
- * @LastEditTime: 2021-09-06 10:42:45
+ * @LastEditTime: 2022-05-26 22:19:06
 -->
 # 柯里化(Currying)
 ***
@@ -44,4 +44,4 @@ let add = (arg: number[])=>{
 let addCurry = currying(add)
 console.log(addCurry(1)(2)(3,4, 5)())  //15
 ```
-**参考：https://zh.javascript.info/currying-partials**
+**参考：<https://zh.javascript.info/currying-partials>**
