@@ -33,10 +33,6 @@ for(let i = 0; i<Row; i++){
     !!zRow[0] && zPoint.push(zRow);
 }
 
-console.log( zfPoint );
-
-
-
 const app = Vue.createApp({
     data(){
         return{
@@ -49,9 +45,9 @@ const app = Vue.createApp({
                 // 图形第一行所在总行数索引
                 firstRow: 0,
                 // 图形本身占用几行
-                totalRow: 0,
+                totalRow: 2,
                 // 图形当前的位置、形状
-                point: []
+                point: zPoint
             },
             // 几种方块，默认位置在第一行中间
             shape: {
@@ -72,8 +68,16 @@ const app = Vue.createApp({
         // 当前渲染图形合并
         fnMerge(confirm=false){
             let {firstRow, totalRow, point} = this.currentShap;
-            let copyConfirmList = Object.assign([], this.confirmList);
-            copyConfirmList.splice(firstRow, totalRow, ...point);
+            let copyConfirmList = JSON.parse(JSON.stringify(this.confirmList));
+            // copyConfirmList.splice(firstRow, totalRow, ...point);
+            console.log(  );
+            for(let i = firstRow; i<totalRow+firstRow; i++){
+
+                for(let c=0; c<Column; c++){
+                    let status = false;
+                    if(point[i-firstRow][c].status) copyConfirmList[i][c].status = true;
+                }
+            }
 
             this.renderList = Object.assign([], copyConfirmList);
             
@@ -92,8 +96,7 @@ const app = Vue.createApp({
         },
         fnDown(){
             this.currentShap.firstRow += 1;
-            this.currentShap.totalRow = 2;
-            this.currentShap.point = zPoint;
+            
             if(this.currentShap.firstRow + this.currentShap.totalRow >22){
                 this.fnMerge(true);
             }else{
