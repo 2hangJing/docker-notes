@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>俄罗斯方块</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.36/vue.global.prod.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div class="operation">
+            <button @click="fnLeft">向左</button>
+            <button @click="fnRight">向右</button>
+            <button @click="fnDown">向下</button>
+        </div>
+        <div class="wrap">
+            <div class="row" v-for="(r, index) in renderList">
+                <p>{{index}}</p>
+                <div class="item" v-for="(i, cIndex) in r" :class="{active: i.status}">
+                    <p v-if="index == 0">{{cIndex}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./index.js"></script>
+</html>

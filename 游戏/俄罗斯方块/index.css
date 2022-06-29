@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.wrap{
+    position: relative;
+    width: 400px;
+    margin: 50px auto 0;
+}
+.row{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.row>p{
+    position: absolute;
+    left: -30px;
+}
+.item{
+    width: 15px;
+    height: 15px;
+    background-color: #ddd;
+    margin: 3px;
+    position: relative;
+}
+.item>p{
+    position: absolute;
+    top: -30px;
+}
+.active{
+    background-color: tan;
+}
+
+
+.operation{
+    width: 400px;
+    margin: 20px auto;
+}
