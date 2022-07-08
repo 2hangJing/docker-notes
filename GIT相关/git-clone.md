@@ -9,4 +9,5 @@
 克隆部分后可以执行如下指令恢复完整克隆：
 `git fetch --unshallow`
 
-
+#### 只克隆指定分支
+`git clone --single-branch --branch 分支名 git仓库地址`
