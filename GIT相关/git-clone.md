@@ -11,3 +11,10 @@
 
 #### 只克隆指定分支
 `git clone --single-branch --branch 分支名 git仓库地址`
+
+此时仓库只有当前一个分支，如下方式获取其他远程分支：
+`git remote set-branches --add origin 分支名`
+`git fetch origin 分支名`
+
+## 参考
+https://www.zhihu.com/question/38305012
