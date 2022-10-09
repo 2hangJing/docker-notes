@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-05-21 10:44:02
  * @LastEditors: monai
- * @LastEditTime: 2022-05-09 17:35:07
+ * @LastEditTime: 2022-07-27 10:10:56
 --> 
 
 <!-- https://www.frontendwingman.com/Chrome/C03/object&function.html -->
@@ -46,3 +46,7 @@ Chrome浏览器地址栏输入 chrome://flags/
 2. 在属性页面中的目标输入框里加上： `--disable-web-security --user-data-dir=F:\Google\newUser`
    - 示例：`F:\Google\Chrome\Application\chrome.exe --disable-web-security --user-data-dir=F:\Google\newUser`
 3. 成功后打开浏览器会有 `--disable-web-security 稳定性和安全性会有所下降。` 提示。
+
+## 无法设置 cookie 配置
+1. 打开 chrome://flags/#out-of-blink-cors。
+2. 搜索 Partitioned cookies，设置为 Disabled。

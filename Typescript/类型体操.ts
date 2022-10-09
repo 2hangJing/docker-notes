@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2022-04-28 16:25:22
  * @LastEditors: monai
- * @LastEditTime: 2022-05-21 09:38:48
+ * @LastEditTime: 2022-10-09 09:39:28
  */
 
 // https://juejin.cn/post/6999280101556748295#heading-25
@@ -10,12 +10,12 @@
 
 /********* 元组转换为对象 *********/ 
 // const 断言: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions
-const tuple1 = ['tesla', 'model 3', 'model X', 'model Y'] as const;
+const tuple1 = ['name', 'id'] as const;
 
 type TupleToObject<T extends readonly string[]> = {
   [P in T[number]]:P
 };
-let result1: TupleToObject<typeof tuple1>;
+let result1: TupleToObject<typeof tuple1> = {name: 'name', id: 'id'};
 
 /********* 返回数组第一个元素类型 *********/ 
 type FirstArrType<T extends readonly any[]> = T extends readonly [infer FirstType, ...infer Other]? FirstType: unknown;
