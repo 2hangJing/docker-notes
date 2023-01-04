@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2022-04-28 16:25:22
  * @LastEditors: monai
- * @LastEditTime: 2022-10-09 09:39:28
+ * @LastEditTime: 2023-01-04 18:04:26
  */
 
 // https://juejin.cn/post/6999280101556748295#heading-25
@@ -202,3 +202,37 @@ type AppendToObject<
 	[key in K]: V
 };
 // type s = AppendToObject<{id: 10}, 'name', 'ZJ'>;
+
+
+/********* [1,2] [3,4] => [[1,3], [2,4]] *********/
+type Zip<
+	A extends readonly unknown[],
+	B extends readonly unknown[],
+	R extends unknown[] = []
+> = A extends [] ? R : Zip<
+	A extends readonly [infer F1, ...infer Other1] ? Other1: [],
+	B extends readonly [infer F1, ...infer Other1] ? Other1: [],
+	[...R, [A[0], B[0]]]
+>;
+
+type s = Zip<[1,2], [3,4]>;
+
+// 函数类型
+function zip<A extends readonly unknown[], B extends readonly unknown[]>(arrA: A, arrB: B): Zip<A, B>;
+// 函数实现（利用函数重载，在函数声明时避免直接使用 zip 类型导致报错）
+function zip(arrA: unknown[], arrB: unknown[]){
+	if(arrA.length === 0) return [];
+	const [oneA, ...otherA] = arrA;
+	const [oneB, ...otherB] = arrB;
+	return [[oneA, oneB], ...zip(otherA, otherB)];
+}
+
+// function zip<A extends readonly unknown[], B extends readonly unknown[]>(arrA: A, arrB: B): Zip<A, B>{
+// 	if(arrA.length === 0) return [];
+// 	const [oneA, ...otherA] = arrA;
+// 	const [oneB, ...otherB] = arrB;
+// 	return [[oneA, oneB], ...zip(otherA, otherB)];
+// }
+
+// 需要使用 const 断言，将类型 [number, number] => [1,2]
+let s = zip(<const>[1, 2], <const>[3, 4]);
