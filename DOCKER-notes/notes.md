@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2021-09-07 14:34:45
+ * @LastEditTime: 2023-05-31 15:26:34
  -->
 # docker 笔记
 准备将自己的博客系统装Ubuntu中，本地开发环境是win不太方便学习，docker正好解决这个问题，先学习下docker。
@@ -57,6 +57,51 @@ docker的镜像是多层存储结构，可以复用、继承。不同的镜像�
 *docker image rm --help* 展示相关选项
 
 删除本地镜像，可以使用镜像的短ID、长ID、镜像名、摘要。
+
+**4. 镜像标签**
+
+tag 作用：
+1. 保存配置到一定阶段的 image，同时给予 tag，方便回溯。
+2. 重命名为 docker username 可以配合 push 指令提交到 docker hub。
+
+注意：tag 默认为 latest。
+
+*docker tag <源镜像名:tag> <镜像名:tag>*
+*docker tag <源镜像名:tag> <docker hub username/仓库名:tag>*
+
+示例：
+```shell
+docker image ls
+# REPOSITORY         TAG       IMAGE ID       CREATED       SIZE
+# ubuntu             latest    3b418d7b466a   5 weeks ago   77.8MB
+
+# 作用 1 tag 指令
+docker tag ubuntu:latest ubuntu:99
+# REPOSITORY         TAG       IMAGE ID       CREATED       SIZE
+# ubuntu             99        3b418d7b466a   5 weeks ago   77.8MB
+# ubuntu             latest    3b418d7b466a   5 weeks ago   77.8MB
+
+# 作用 2 tag 指令
+# docker hub user name: 15901233752
+# docker hub 仓库名称: myubuntu
+docker tag ubuntu:latest 15901233752/myubuntu:latest
+```
+
+**4. 推送镜像**
+
+*docker push <docker hub username/仓库名:tag>*
+
+注意：推动到 dockerhub 需要提前建好仓库，以及登录。
+登录：`docker login -u 用户名 -p 密码`
+
+示例：
+```shell
+# 先对镜像打 tag
+docker tag ubuntu:latest 15901233752/myubuntu:latest
+
+# 推送到 docker hub
+docker push 15901233752/myubuntu:latest
+```
 
 
 ## Dockerfile ##
