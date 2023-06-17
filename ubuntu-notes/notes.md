@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2023-06-17 14:50:39
+ * @LastEditTime: 2023-06-17 18:23:56
  -->
 # ubuntu 笔记
 在学 docker 中 linux 部分指令以及部分软件安装、文件拷贝等操作记录
@@ -155,7 +155,12 @@ node 下载指令：
    - `sudo service redis-server start  # 启动`
    - `sudo service redis-server stop  # 关闭`
    - `sudo service redis-server restart  # 重启`
-   - `redis-cli  # 客户端连接`
+
+
+**redis-cli**
+1. 进入指令 `redis-cli  # 客户端连接`
+2. 输入密码 `auth password`
+3. 获取全部存储 key `keys *`
 ​
 <!-- # 远程连接 
 sudo vi /etc/redis/redis.conf
