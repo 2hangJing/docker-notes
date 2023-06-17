@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2022-05-27 14:43:55
+ * @LastEditTime: 2023-06-17 18:23:56
  -->
 # ubuntu 笔记
 在学 docker 中 linux 部分指令以及部分软件安装、文件拷贝等操作记录
@@ -36,10 +36,14 @@
 **8.2 tail -f ./xx.log**
 动态（当前文件改变查看中也会动态改变）查看 xx.log。
 
+**9 service --status-all**
+当前所有服务运行状态。（可用次方法查看服务名）
+    1. [ + ] 代表启动运行状态
+    2. [ - ] 代表关闭停止状态
 
 
 ## 软件 ##
-**1. nginx**  
+#### **1. nginx**  
 
 下载：`apt-get -y install nginx`  
 配置文件目录：`/etc/nginx/nginx.conf`  
@@ -48,7 +52,7 @@
 重启：`service nginx restart`  
 重启：`service nginx reload` *不重启重新载入最新配置文件内容*
 
-**2. nvm**
+#### **2. nvm**
 
 下载：`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash`  
 下载完成后配置环境变量  
@@ -62,10 +66,10 @@ export NVM_DIR="$HOME/.nvm" \
 node 下载指令：
 `nvm install vx.x.x` 示例：`nvm install v10.16.0`
 
-**2. curl**  
+#### **3. curl**  
 下载：`apt-get -y install curl`
 
-**4. node**
+#### **4. node**
 
 下一代 Debian 正式发行版的代号为 "bullseye" — 发布时间尚未确定  
 1. Debian 10（"buster"） — 当前的稳定版（stable）  
@@ -81,7 +85,7 @@ node 下载指令：
 11. Debian GNU/Linux 2.1（"slink"） — 被淘汰的稳定版  
 12. Debian GNU/Linux 2.0（"hamm"） — 被淘汰的稳定版  
 
-**5. mysql**
+#### **5. mysql**
 
 **下载：** `apt-get -y install mysql-server mysql-client`
 
@@ -118,8 +122,8 @@ node 下载指令：
 2. 修改 mysqld.cnf。 指令：**`vim /etc/mysql/mysql.conf.d/mysqld.cnf`**，找到 `bind-address= 127.0.0.1` 将 `127.0.0.1` 修改为 `0.0.0.0`。修改后重启 mysql。
 
 
-**博客环境切换注意：**  
-### **mysql:**
+##### **博客环境切换注意：**  
+**mysql:**
 1. `cat /etc/mysql/debian.cnf` 查看默认账号密码。
 2. `mysql -u root -p;` 进入mysql，root 账户或者默认 user 账号（第一步中查看的账号，版本不同可能不一样，默认：`debian-sys-maint`）。
 3. `use mysql;`
@@ -129,9 +133,40 @@ node 下载指令：
 7. `CREATE DATABASE xxxx;` 第四步创建数据库。
 8. `source /code/xxx.sql;` 第五步导入/code/xxx.sql 文件。
 
-### **File Zilla root用户连接配置 :**
+**File Zilla root用户连接配置 :**
 1. `sudo passwd root` 先设置 root 密码。
 2. `sudo -i` 切换到 root 用户。
 3. `sudo vim /etc/ssh/sshd_config` 进入ssh 配置，准备修改配置文件。
 4. `PermitRootLogin yes` 找到 PermitRootLogin，摁 i 进入编辑模式，将后面值修改为 yes，`esc` `:wq` 保存退出。
 5. `sudo service ssh restart` 重启 ssh 服务，重启后用 File Zilla root 账户链接。
+
+
+#### **6. redis**
+默认端口：6379
+
+
+1. 安装 `apt install redis-server`
+2. 配置 `vim /etc/redis/redis.conf`
+3. 找到 supervised 设置为 systemd
+    - 重新加载Redis服务文件 `service redis-server restart`
+    - 查看 Redis 的运行状态 `systemctl status redis-server`
+
+4. 一些指令
+   - `sudo service redis-server start  # 启动`
+   - `sudo service redis-server stop  # 关闭`
+   - `sudo service redis-server restart  # 重启`
+
+
+**redis-cli**
+1. 进入指令 `redis-cli  # 客户端连接`
+2. 输入密码 `auth password`
+3. 获取全部存储 key `keys *`
+​
+<!-- # 远程连接 
+sudo vi /etc/redis/redis.conf
+# 将 bind 127.0.0.1 ::1 改为 bind 0.0.0.0
+sudo service redis restart  # 重启
+​
+# 设置密码
+sudo vi /etc/redis/redis.conf
+# 设置：requirepass 自己的密码 -->
