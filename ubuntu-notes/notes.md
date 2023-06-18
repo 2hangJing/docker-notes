@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2023-06-17 18:23:56
+ * @LastEditTime: 2023-06-17 19:37:27
  -->
 # ubuntu 笔记
 在学 docker 中 linux 部分指令以及部分软件安装、文件拷贝等操作记录
@@ -140,33 +140,3 @@ node 下载指令：
 4. `PermitRootLogin yes` 找到 PermitRootLogin，摁 i 进入编辑模式，将后面值修改为 yes，`esc` `:wq` 保存退出。
 5. `sudo service ssh restart` 重启 ssh 服务，重启后用 File Zilla root 账户链接。
 
-
-#### **6. redis**
-默认端口：6379
-
-
-1. 安装 `apt install redis-server`
-2. 配置 `vim /etc/redis/redis.conf`
-3. 找到 supervised 设置为 systemd
-    - 重新加载Redis服务文件 `service redis-server restart`
-    - 查看 Redis 的运行状态 `systemctl status redis-server`
-
-4. 一些指令
-   - `sudo service redis-server start  # 启动`
-   - `sudo service redis-server stop  # 关闭`
-   - `sudo service redis-server restart  # 重启`
-
-
-**redis-cli**
-1. 进入指令 `redis-cli  # 客户端连接`
-2. 输入密码 `auth password`
-3. 获取全部存储 key `keys *`
-​
-<!-- # 远程连接 
-sudo vi /etc/redis/redis.conf
-# 将 bind 127.0.0.1 ::1 改为 bind 0.0.0.0
-sudo service redis restart  # 重启
-​
-# 设置密码
-sudo vi /etc/redis/redis.conf
-# 设置：requirepass 自己的密码 -->
