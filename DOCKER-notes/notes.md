@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2020-02-27 14:42:53
  * @LastEditors: monai
- * @LastEditTime: 2023-06-17 19:23:53
+ * @LastEditTime: 2023-06-26 17:17:20
  -->
 # docker 笔记
 准备将自己的博客系统装Ubuntu中，本地开发环境是win不太方便学习，docker正好解决这个问题，先学习下docker。
@@ -87,7 +87,20 @@ docker tag ubuntu:latest ubuntu:99
 docker tag ubuntu:latest 15901233752/myubuntu:latest
 ```
 
-**4. 推送镜像**
+**4. 制作镜像**
+
+用 container 制作 image。
+
+*docker commit -a <'作者'> -m <'说明'> <'容器 id'> <镜像名称:镜像tag>*
+
+示例：
+```shell
+docker -a 'zj' -m '一段说明' e55edea758ceb6 blog:latest
+# e55edea758ceb6 为容器 id
+# blog 生成的 image 名称
+```
+
+**5. 推送镜像**
 
 *docker push <docker hub username/仓库名:tag>*
 
@@ -102,6 +115,9 @@ docker tag ubuntu:latest 15901233752/myubuntu:latest
 # 推送到 docker hub
 docker push 15901233752/myubuntu:latest
 ```
+
+
+
 
 
 ## Dockerfile ##
