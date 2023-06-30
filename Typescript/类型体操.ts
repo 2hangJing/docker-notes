@@ -2,7 +2,7 @@
  * @Author: monai
  * @Date: 2022-04-28 16:25:22
  * @LastEditors: monai
- * @LastEditTime: 2023-01-04 18:04:26
+ * @LastEditTime: 2023-06-27 11:37:08
  */
 
 // https://juejin.cn/post/6999280101556748295#heading-25
@@ -32,8 +32,10 @@ type TypeIf<B extends boolean, T, F> = B extends true? T: F;
 let result4: TypeIf<true, 'true', 'false'>;
 
 /********* 类型 concat  *********/ 
-type TypeConcat<T extends any[], U extends any[]> = [...T, ...U];
-let result5: TypeConcat<[1,2,3], [4,5,6]>;
+const arr1 = [1,2,3] as const;
+const arr2 = [4,5,6] as const;
+type TypeConcat<T extends readonly any[], U extends readonly any[]> = [...T, ...U];
+let result5: TypeConcat<typeof arr1, typeof arr2>;
 
 /********* 类型 includes  *********/ 
 type Includes<T extends any[], U> = {
@@ -143,7 +145,7 @@ type ReplaceAll<
 	T extends string
 > = S extends ''? '': 
 	S extends `${infer SL}${F}${infer SR}`? ReplaceAll<`${SL}${T}${SR}`, F, T>: S;
-// type SS = ReplaceAll<'aabbcc', 'b', 'B'>;	
+// type SS = ReplaceAll<'aabbcc', 'b', 'B'>;
 
 
 /********* join *********/
